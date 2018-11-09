@@ -1,5 +1,6 @@
 package express.if_week.expresstrain_android;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.graphics.TypefaceCompatApi26Impl;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.mTextView.setText(mDataset[position]);
         if(mClicked[position]) {
             holder.mTextView.setTypeface(null, Typeface.BOLD);
-            holder.mTextView.setTextColor(0xeec25b);
+            holder.mTextView.setTextColor(Color.rgb(238,194,84));
         }
 
     }

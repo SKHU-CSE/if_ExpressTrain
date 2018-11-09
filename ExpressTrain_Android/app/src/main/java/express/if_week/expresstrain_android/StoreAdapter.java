@@ -1,33 +1,45 @@
 package express.if_week.expresstrain_android;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Store_item> mDataset;
-
+    private Activity activity;
+    ButtonClickListener listener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
 
 
+
     // Provide a suitable constructor (depends on the kind of dataset)
-    public StoreAdapter(ArrayList<Store_item> myDataset) {
+    public StoreAdapter(ArrayList<Store_item> myDataset, Activity activity,ButtonClickListener listener) {
         mDataset = myDataset;
+        this.activity=activity;
+        this.listener=listener;
     }
 
 
     // Replace the contents of a view (invoked by the layout manager)
 
+    public interface ButtonClickListener {
 
+        void ContentOnClick(View v);
+
+        void MapOnClick(View v);
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
@@ -87,6 +99,20 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         vh.mAddress.setText(mDataset.get(position).getAddress());
         vh.mTitle.setText(mDataset.get(position).getTitle());
         vh.phone.setText(mDataset.get(position).getPhone());
+
+        vh.bContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.ContentOnClick(v);
+            }
+        });
+        vh.bMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.MapOnClick(v);
+            }
+        });
+
     }
 
     private void configureViewHolder1(ViewHolder vh1, int position) {

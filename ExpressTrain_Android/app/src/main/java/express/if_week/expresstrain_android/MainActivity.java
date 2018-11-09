@@ -1,5 +1,7 @@
 package express.if_week.expresstrain_android;
 
+import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
+import android.support.v7.widget.CardView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Store_item> arrayList_store;
     ArrayList<Store_item> arrayList_store2;
     private StoreAdapter store_adapter;
+    boolean expend=false;
 
     String[] category=new String[]{"한식","중식","분식","제과점","패스트푸드","부식"};
     @Override
@@ -63,20 +66,42 @@ public class MainActivity extends AppCompatActivity {
                         mRecyclerView.setAdapter(mAdapter);
                     }
 
+
                     @Override
                     public void onLongItemClick(View view, int position) {
                   //      Toast.makeText(getApplicationContext(),position+"번 째 아이템 롱 클릭",Toast.LENGTH_SHORT).show();
                     }
                 }));
 
-        mRecyclerView.addOnItemTouchListener(
+
+        mRecycler_stroeView2.addOnItemTouchListener(
                 new RecycleViewItemClickListener(getApplicationContext(), mRecyclerView, new RecycleViewItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        boolean[] checked= new boolean[]{false,false,false,false,false,false};
-                        checked[position]=true;
-                        mAdapter=new CategoryAdapter(category,checked);
-                        mRecyclerView.setAdapter(mAdapter);
+                      final CardView cardView=view.findViewById(R.id.card_2_card);
+                      final RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) cardView.getLayoutParams();
+                        ValueAnimator animator=null;
+
+                      if(!expend) {
+                            expend=true;
+                         animator = ValueAnimator.ofInt(layoutParams.height,layoutParams.height+100);
+                          }else {
+                            expend=false;
+                          animator = ValueAnimator.ofInt(layoutParams.height, layoutParams.height-100);
+                      }
+                        if(animator!=null) {
+                            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                    int height = (Integer) valueAnimator.getAnimatedValue();
+                                    layoutParams.height = (int) height;
+                                    cardView.setLayoutParams(layoutParams);
+                                }
+                            });
+                            animator.setDuration(300);
+                            animator.start();
+                        }
+
                     }
 
                     @Override
@@ -89,10 +114,32 @@ public class MainActivity extends AppCompatActivity {
 
         arrayList_store=new ArrayList<Store_item>();
         arrayList_store2=new ArrayList<Store_item>();
-        store_adapter=new StoreAdapter(arrayList_store);
+        store_adapter=new StoreAdapter(arrayList_store, this, new StoreAdapter.ButtonClickListener() {
+            @Override
+            public void ContentOnClick(View v) {
+            }
+
+            @Override
+            public void MapOnClick(View v) {
+            }
+        });
 
         mRecycler_stroeView.setAdapter(store_adapter);
-        mRecycler_stroeView2.setAdapter(new StoreAdapter(arrayList_store2));
+        mRecycler_stroeView2.setAdapter(new StoreAdapter(arrayList_store2,this,new StoreAdapter.ButtonClickListener(){
+
+            @Override
+            public void ContentOnClick(View v) {
+                Intent intent=new Intent(MainActivity.this,StoreContent.class);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void MapOnClick(View v) {
+                Intent intent=new Intent(MainActivity.this,StoreMap.class);
+                startActivity(intent);
+            }
+            }));
 
         arrayList_store.add(new Store_item(1,"장희승","인천광역시 검단","010-4012-2423"));
         arrayList_store.add(new Store_item(1,"임수현","서울시 검단","010-4012-2423"));
@@ -108,4 +155,5 @@ public class MainActivity extends AppCompatActivity {
 
         //arrayList_store.add()
     }
+
 }
