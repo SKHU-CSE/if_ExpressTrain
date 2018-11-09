@@ -27,12 +27,14 @@ public class Store_item {
         this.phone = phone;
     }
 
-    public Store_item(String Title,String address,String phone){
+    public Store_item(int Type,String Title,String address,String phone){
         this.title=Title;
         this.Address=address;
         this.phone=phone;
+        this.Type=Type;
     }
 
+    int Type;
     String title;
     String Address;
     String phone;
