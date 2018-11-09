@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="130dp"
+    android:layout_height="160dp"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:maxWidth="100dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    card_view:cardCornerRadius="4dp"
+    android:elevation="10dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="김밥천국"
+            android:layout_marginTop="13dp"
+            android:id="@+id/card_title"
+            android:layout_marginLeft="10dp"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:layout_marginBottom="6dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="서울시"
+            android:id="@+id/card_address"
+            android:layout_marginBottom="6dp"
+            android:layout_below="@id/card_title"
+            android:layout_alignLeft="@id/card_title"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="02-123-456"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="23dp"
+            android:id="@+id/card_phone"
+            android:layout_below="@id/card_address"
+            android:layout_alignLeft="@id/card_title"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
