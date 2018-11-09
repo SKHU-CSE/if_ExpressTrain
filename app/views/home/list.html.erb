@@ -1,0 +1,124 @@
+  <html lang="en">
+<body>
+<link rel="stylesheet" type="text/css" href="home.css">
+<header>
+        <nav class='nav-basic' id="nav-basic">
+            <ul>
+                <li>
+                    <img src="..">
+                </li>
+                <li>
+                    <a href="/">HOME</a>
+                </li>
+                <li>
+                    <a href="/list">STORE</a>
+                </li>
+                <li>
+                    <a href="/notice">NOTICE</a>
+                </li>
+                <li>
+                    <a href="/index">신청하기</a>
+                </li>
+                
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#LoginModal">Login</a>
+                </li>
+                <li>
+                    <a href="#">Logout</a>
+                </li>
+            </ul>
+        </nav>
+        
+          <script>
+        const myNav = document.getElementById('nav-basic')
+ 
+        window.onscroll = function () {
+            console.log(window.scrollY)
+            if (window.scrollY >= 0.1) {
+                myNav.className = 'nav-change';
+            }
+            else {
+                myNav.className = 'nav-basic';
+            }
+        }
+    </script>
+    </header>
+<div class="container2">
+<seticon>
+
+        <div id="s2">   
+            <div class="control-group">
+                <h3>카테고리</h3>
+                    <label class="control control--checkbox"> 분식
+                      <input type="checkbox"/>
+                      <div class="control__indicator"></div>    
+                    </label>
+                    <label class="control control--checkbox"> 한식
+                      <input type="checkbox"/>
+                      <div class="control__indicator"></div>
+                    </label>
+                    <label class="control control--checkbox"> 제과점
+                    <input type="checkbox"/>
+                      <div class="control__indicator"></div>
+                    </label>
+                     <label class="control control--checkbox"> 중식
+                      <input type="checkbox"/>
+                      <div class="control__indicator"></div>
+                    </label>
+                     <label class="control control--checkbox"> 편의점
+                      <input type="checkbox"/>
+                      <div class="control__indicator"></div>
+                    </label>
+                  </div>
+                  <div class="control-group">
+            <h3>카드종류</h3>
+                <label class="control control--checkbox"> 꿈나무카드
+                  <input type="checkbox"/>
+                  <div class="control__indicator"></div>
+                </label>
+              </div>
+              <div class="control-group">
+                <h3>위치</h3>
+                <label class="control control--checkbox"> 서울
+                  <input type="checkbox"/>
+                      <div class="control__indicator"></div>
+                </label>
+          </div>
+              <a class="btn btn-outline-fill" href="/">찾기</a>
+        </div>
+        <!---------------list card----------------->
+         <div class="card bg-light mb-3" style="max-width: 18rem;">
+          <div class="card-body">
+            <a href="#" title="눌러보세요" data-toggle="modal" data-target="#ListModal"> <img  src="assets/main.png" width="200px" height="150px"></a> 
+        <h5 class="card-title">Light card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+    </div>
+        <a class="btn btn-outline-fill" href="/map">지도 보기</a>
+    </seticon>
+    </div>
+<!---------list modal------------->
+ <div class="modal fade" id="ListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body"> 
+                    <div class="list_modal_img">
+                    <img src='assets/main.png' width="300px" height="200px">
+                    </div>
+             <div class="card"> 
+                  <div class="card-body">
+                    This is some text within a card body.
+                  </div>
+                    </div>
+                  </div>
+  	    	</div>
+              </div>
+              </div>
+
+</body>       
+</html>

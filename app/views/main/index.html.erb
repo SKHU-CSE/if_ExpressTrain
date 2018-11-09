@@ -1,0 +1,183 @@
+  <html lang="en">
+<body>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <header>
+        <nav class='nav-basic' id="nav-basic">
+            <ul>
+                <li>
+                    <img src="..">
+                </li>
+                <li>
+                    <a href="/">HOME</a>
+                </li>
+                <li>
+                    <a href="/list">STORE</a>
+                </li>
+                <li>
+                    <a href="/notice">NOTICE</a>
+                </li>
+                <li>
+                    <a href="/index">APPLY</a>
+                </li>
+                
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#LoginModal">Login</a>
+                </li>
+                <li>
+                    <a href="#">Logout</a>
+                </li>
+            </ul>
+        </nav>
+ 
+        <div class='HeaderImage'>
+             <img src="/assets/main.png" height="650px" width="100%">
+        </div>
+ 
+     <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                       <img src="assets/main.png" width="50px" height="50px">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action='/users/sign_in' method='post'>
+                        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                        <div class="form-group">
+                          <label for="user_email">ID</label>
+                          <input type="text" value="" name="user[email]" autofocus="autofocus"  class="form-control" id="user_email" aria-describedby="emailHelp" placeholder="Enter email">
+                          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1 user_password">Password</label>
+                          <input type="password" name="user[password]" class="form-control" id="user_password" placeholder="Password">
+                        </div>
+                      
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" name="commit" >Login</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    </form>
+                  </div>
+  	    	</div>
+              </div>
+              
+    </header>
+ 
+    
+    
+    
+    <script>
+        const myNav = document.getElementById('nav-basic')
+ 
+ 
+        window.onscroll = function () {
+            console.log(window.scrollY)
+            if (window.scrollY >= 10) {
+                myNav.className = 'nav-change';
+            }
+            else {
+                myNav.className = 'nav-basic';
+            }
+        }
+    </script>
+    
+    <div class="container1">
+    <seticon>
+      <div class="s1">
+<!--        <div class="card-deck">-->
+<!--  <div class="card">-->
+<!--    <img class="card-img-top" src="assets/main.png" alt="Card image cap" height="200px">-->
+<!--    <div class="card-body">-->
+<!--      <h5 class="card-title">Card title</h5>-->
+<!--      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+<!--      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="card">-->
+<!--    <img class="card-img-top" src="assets/main.png" alt="Card image cap" height="200px">-->
+<!--    <div class="card-body">-->
+<!--      <h5 class="card-title">Card title</h5>-->
+<!--      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>-->
+<!--      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="card">-->
+<!--    <img class="card-img-top" src="assets/main.png" alt="Card image cap" height="200px">-->
+<!--    <div class="card-body">-->
+<!--      <h5 class="card-title">Card title</h5>-->
+<!--      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>-->
+<!--      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<figure class="snip1273">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample72.jpg" alt="sample72"/>
+         <figcaption>
+          <h3>Fletch Skinner</h3>
+          <p>I don't need to compromise my principles, because they don't have the slightest bearing on what happens to me anyway. </p>
+        </figcaption>
+            <a href="#"></a>
+  </figure>
+  
+  <figure class="snip1273">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample21.jpg" alt="sample21"/>
+      <figcaption>
+        <h3>Indigo Violet</h3>
+          <p>What's the point of wearing your favorite rocketship underpants if nobody ever asks to see 'em?</p>
+      </figcaption>
+          <a href="#"></a>
+  </figure>
+  
+  <figure class="snip1273">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample86.jpg" alt="sample86"/>
+        <figcaption>
+          <h3>Gunther Beard</h3>
+            <p>Given that sooner or later we're all just going to die, what's the point of learning about integers?</p>
+        </figcaption>
+          <a href="#"></a>
+  </figure>
+  </div>
+  
+  <div class="s2">
+    <figure class="snip1273">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample72.jpg" alt="sample72"/>
+         <figcaption>
+          <h3>Fletch Skinner</h3>
+          <p>I don't need to compromise my principles, because they don't have the slightest bearing on what happens to me anyway. </p>
+        </figcaption>
+            <a href="#"></a>
+  </figure>
+  
+  <figure class="snip1273">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample21.jpg" alt="sample21"/>
+      <figcaption>
+        <h3>Indigo Violet</h3>
+          <p>What's the point of wearing your favorite rocketship underpants if nobody ever asks to see 'em?</p>
+      </figcaption>
+          <a href="#"></a>
+  </figure>
+  
+  <figure class="snip1273">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample86.jpg" alt="sample86"/>
+        <figcaption>
+          <h3>Gunther Beard</h3>
+            <p>Given that sooner or later we're all just going to die, what's the point of learning about integers?</p>
+        </figcaption>
+          <a href="#"></a>
+  </figure>
+  </div>
+</seticon>
+    <script>
+        $(".hover").mouseleave(
+        function () {
+          $(this).removeClass("hover");
+          }
+        );
+      </script>
+  </div>
+</body>
