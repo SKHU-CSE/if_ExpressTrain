@@ -1,17 +1,30 @@
 package express.if_week.expresstrain_android;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 public class StoreContent extends AppCompatActivity {
 
@@ -20,16 +33,18 @@ public class StoreContent extends AppCompatActivity {
 
     private RecyclerView.LayoutManager mLayoutManager_menu;
     private RecyclerView.LayoutManager mLayoutManager_content;
-
+    Bitmap selectBitmap;
     ArrayList<Store_item> arrayList_menu;
     ArrayList<Store_item> arrayList_content;
+    String store_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_content);
 
-
+        Intent intent=getIntent();
+        store_name=intent.getStringExtra("STORE_NAME");
         mRecycler_menu=findViewById(R.id.content_menu_image);
         mRecycler_content=findViewById(R.id.content_another);
 
@@ -49,21 +64,21 @@ public class StoreContent extends AppCompatActivity {
 
         mRecycler_menu.setAdapter(new StoreAdapter(arrayList_menu,this, new StoreAdapter.ButtonClickListener() {
             @Override
-            public void ContentOnClick(View v) {
+            public void ContentOnClick(View v,int position) {
             }
 
             @Override
-            public void MapOnClick(View v) {
+            public void MapOnClick(View v,int position) {
             }
         }));
 
         mRecycler_content.setAdapter(new StoreAdapter(arrayList_content,this, new StoreAdapter.ButtonClickListener() {
             @Override
-            public void ContentOnClick(View v) {
+            public void ContentOnClick(View v,int position) {
             }
 
             @Override
-            public void MapOnClick(View v) {
+            public void MapOnClick(View v,int position) {
             }
         }));
 
@@ -90,5 +105,96 @@ public class StoreContent extends AppCompatActivity {
                 finish();
             }
         });
+
+        Button button1=findViewById(R.id.content_menu_add);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,
+                        "Select Picture"), 1);
+            }
+        });
     }
+
+    @Override
+    protected void onActivityResult( int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1&&resultCode==RESULT_OK&&data !=null&&data.getData() !=null) {
+
+                Uri selectedImageUri = data.getData();
+                try{
+                    selectBitmap =MediaStore.Images.Media.getBitmap(getContentResolver(),selectedImageUri);
+                    uploadImage();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] imageBytes =baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes,Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private void uploadImage(){
+        class UploadImage extends AsyncTask<Bitmap,Void,String> {
+
+            ProgressDialog loading;
+            RequestHandler rh = new RequestHandler();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                loading = ProgressDialog.show(StoreContent.this, "Uploading...", null,true,true);
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(getApplicationContext(),s, Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                Bitmap bitmap = params[0];
+                String uploadImage = getStringImage(bitmap);
+
+
+                HashMap<String,String> data = new HashMap<>();
+
+                data.put("image", uploadImage);//php에서 POST값으로 들어감
+                data.put("store",store_name);
+
+
+/*
+                long now=System.currentTimeMillis();
+                Date date=new Date(now);
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                data.put("time",sdf.format(date));
+
+                */
+                String result = rh.sendPostRequest("http://ec2-52-14-45-167.us-east-2.compute.amazonaws.com/menuinsert.php",data);
+
+
+                return result;
+            }
+        }
+
+        UploadImage ui = new UploadImage();
+        ui.execute(selectBitmap);
+    }
+
 }
