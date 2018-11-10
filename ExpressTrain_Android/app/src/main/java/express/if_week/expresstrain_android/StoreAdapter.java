@@ -94,6 +94,7 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case 4:  // content
                 Content_ViewHolder vh4=(Content_ViewHolder)viewHolder;
                 configureContent_ViewHolder(vh4,position);
+
         }
     }
 
@@ -145,10 +146,22 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         vh1.mTitle.setText(mDataset.get(position).getTitle());
     }
 
-    private void configureViewHolder2(VIewHolder2 vh2,int position) {
+    private void configureViewHolder2(VIewHolder2 vh2, final int position) {
         vh2.mAddress.setText(mDataset.get(position).getAddress());
         vh2.mTitle.setText(mDataset.get(position).getTitle());
         vh2.phone.setText(mDataset.get(position).getPhone());
+        vh2.button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.MapOnClick(v,position);
+            }
+        });
+        vh2.button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.ContentOnClick(v,position);
+            }
+        });
     }
 }
 

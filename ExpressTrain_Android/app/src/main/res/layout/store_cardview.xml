@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="130dp"
-    android:layout_height="160dp"
+    android:layout_width="140dp"
+    android:layout_height="175dp"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:maxWidth="100dp"
     android:layout_marginTop="10dp"
@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:text="서울시"
+            android:maxLines="2"
             android:id="@+id/card_address"
             android:layout_marginBottom="6dp"
             android:layout_below="@id/card_title"

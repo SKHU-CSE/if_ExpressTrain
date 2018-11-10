@@ -180,10 +180,15 @@ public class MainActivity extends AppCompatActivity {
         store_adapter = new StoreAdapter(arrayList_store, this, new StoreAdapter.ButtonClickListener() {
             @Override
             public void ContentOnClick(View v, int position) {
+                Intent intent = new Intent(MainActivity.this, StoreContent.class);
+                intent.putExtra("STORE_NAME", arrayList_store2.get(position).title);
+                startActivity(intent);
             }
 
             @Override
             public void MapOnClick(View v, int position) {
+                Intent intent = new Intent(MainActivity.this, MyMap.class);
+                startActivity(intent);
             }
         });
 
@@ -206,7 +211,11 @@ public class MainActivity extends AppCompatActivity {
         mRecycler_stroeView.setAdapter(store_adapter);
         mRecycler_stroeView2.setAdapter(storeAdapter2);
 
-        
+
+        arrayList_store.add(new Store_item(1, "장희승", "인천광역시 검단", "010-4012-2423", null));
+        arrayList_store.add(new Store_item(1, "임수현", "서울시 검단", "010-4012-2423", null));
+        arrayList_store.add(new Store_item(1, "김남수", "서울시 목동", "010-4012-2423", null));
+        arrayList_store.add(new Store_item(1, "함진경", "서울특별시 여의대방로 43나길 25", "010-4012-2423", null));
 
 
         new Thread() {
@@ -265,11 +274,7 @@ public class MainActivity extends AppCompatActivity {
                         if(type==0)
                         arrayList_store2.add(new Store_item(2, name, address, phone, null));
                         else
-                        {
-                            arrayList_store.add(new Store_item(1,name,address,phone,null));
-                        }
-
-
+                            arrayList_store.add(new Store_item(1, name, address, phone, null));
 
                     }
                     storeAdapter2.notifyDataSetChanged();
