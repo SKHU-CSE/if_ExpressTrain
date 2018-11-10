@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private String mJsonString;
 
 
+
     private static final String LOG_TAG = "";
     private static final String TAG_JSON = "";
     private static final String TAG_NAME = "name";
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     int choice=0;
 
     String[] category = new String[]{"한식", "중식", "분식", "제과점", "패스트푸드", "부식"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         boolean[] checked = new boolean[]{false, false, false, false, false, false};
                         checked[position] = true;
+
                         choice=position;
                         arrayList_store2.clear();
                         new Thread() {
@@ -131,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                                 getJson.requestWebServer(callback, "getdb.php", "cardtype=" + cardnum,"categorynum="+choice);
                             }
                         }.start();
+
                         mAdapter = new CategoryAdapter(category, checked);
                         mRecyclerView.setAdapter(mAdapter);
                     }
@@ -220,7 +224,9 @@ public class MainActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+
                 getJson.requestWebServer(callback, "getdb.php", "cardtype=" + cardnum,"categorynum="+choice);
+
             }
         }.start();
         //arrayList_store.add()

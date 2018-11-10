@@ -28,9 +28,13 @@
         </activity>
         <activity android:name=".StoreContent" />
         <activity android:name=".MyMap" />
+
         <activity android:name=".MainActivity" />
         <activity android:name=".CardSelect" />
         <activity android:name=".Member_Register"></activity>
+
+        <activity android:name=".Login"></activity>
+
     </application>
 
 </manifest>
