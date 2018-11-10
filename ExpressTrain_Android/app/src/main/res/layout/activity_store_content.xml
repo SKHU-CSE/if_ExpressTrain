@@ -96,7 +96,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:id="@+id/Content_scroll">
+        android:id="@+id/Content_scroll"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,6 +133,7 @@
         android:maxHeight="50dp"
         android:id="@+id/content_editText"
         android:layout_marginRight="10dp"
+
         android:background="@drawable/stroke"
         android:layout_marginLeft="10dp"
         android:padding="10dp"
