@@ -66,7 +66,7 @@ public class CardSelect extends AppCompatActivity {
         final String finalTitle = title;
         alertDialogBuilder
                 .setTitle(title)
-                .setMessage(message + cardnum)
+                .setMessage(message)
                 .setPositiveButton("확인",
                         new DialogInterface.OnClickListener() {
                             public void onClick(
