@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/card_2_title"
             android:layout_marginLeft="25dp"
-            android:layout_marginBottom="23dp"
+            android:layout_marginBottom="18dp"
             android:text="서울시"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -64,10 +64,11 @@
 
         <View
             android:layout_width="1.2dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_below="@id/card_2_address"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="7dp"
             android:background="#aaaaaa"></View>
 
         <Button

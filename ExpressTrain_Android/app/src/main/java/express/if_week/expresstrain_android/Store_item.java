@@ -32,8 +32,9 @@ public class Store_item {
         this.Address=address;
         this.phone=phone;
         this.Type=Type;
+        expend=false;
     }
-
+    boolean expend;
     int Type;
     String title;
     String Address;

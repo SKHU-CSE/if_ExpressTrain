@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import android.support.v7.widget.CardView;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Store_item> arrayList_store2;
     private StoreAdapter store_adapter;
     boolean expend=false;
+    ScrollView scrollView;
 
     String[] category=new String[]{"한식","중식","분식","제과점","패스트푸드","부식"};
     @Override
@@ -32,22 +34,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        ScrollView scrollView=findViewById(R.id.recycle_scroll);
         mRecyclerView=findViewById(R.id.category_recycle);
         mRecycler_stroeView=findViewById(R.id.store1_cardview);
         mRecycler_stroeView2=findViewById(R.id.store1_cardview2);
         mRecyclerView.setHasFixedSize(true);
         mRecycler_stroeView.setHasFixedSize(true);
-        mRecycler_stroeView2.setHasFixedSize(true);
+        mRecycler_stroeView2.setHasFixedSize(false);
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         ((LinearLayoutManager) mLayoutManager).setOrientation(LinearLayout.HORIZONTAL);
         mLayoutManager_store=new LinearLayoutManager(this);
         ((LinearLayoutManager) mLayoutManager_store).setOrientation(LinearLayout.HORIZONTAL);
         mLayoutManager_store2=new LinearLayoutManager(this);
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecycler_stroeView.setLayoutManager(mLayoutManager_store);
         mRecycler_stroeView2.setLayoutManager(mLayoutManager_store2);
+        mRecycler_stroeView2.setNestedScrollingEnabled(false);
 
 
         // specify an adapter (see also next example)
@@ -82,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
                       final RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) cardView.getLayoutParams();
                         ValueAnimator animator=null;
 
-                      if(!expend) {
-                            expend=true;
+                      if(!arrayList_store2.get(position).expend) {
+                          arrayList_store2.get(position).expend=true;
                          animator = ValueAnimator.ofInt(layoutParams.height,layoutParams.height+100);
                           }else {
-                            expend=false;
+                          arrayList_store2.get(position).expend=false;
                           animator = ValueAnimator.ofInt(layoutParams.height, layoutParams.height-100);
                       }
                         if(animator!=null) {
@@ -141,11 +145,18 @@ public class MainActivity extends AppCompatActivity {
             }
             }));
 
+
+
         arrayList_store.add(new Store_item(1,"장희승","인천광역시 검단","010-4012-2423"));
         arrayList_store.add(new Store_item(1,"임수현","서울시 검단","010-4012-2423"));
         arrayList_store.add(new Store_item(1,"김남수","서울시 목동","010-4012-2423"));
         arrayList_store.add(new Store_item(1,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423"));
 
+
+        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423"));
+        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423"));
+        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423"));
+        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423"));
 
         arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423"));
         arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423"));

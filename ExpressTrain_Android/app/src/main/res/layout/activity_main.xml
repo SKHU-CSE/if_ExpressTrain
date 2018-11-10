@@ -47,10 +47,11 @@
         android:layout_below="@id/Main_topbar"
         app:reverseLayout="true"></android.support.v7.widget.RecyclerView>
 
-<ScrollView
+<android.support.v4.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/category_recycle"
+    android:id="@+id/recycle_scroll"
     >
     <LinearLayout
         android:layout_width="wrap_content"
@@ -64,8 +65,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/store1_cardview2"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>
 </RelativeLayout>
