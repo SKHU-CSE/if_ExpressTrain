@@ -77,12 +77,7 @@ public class MyMap extends NMapActivity {
         mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
         mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
 
-        new Thread() {
-            public void run() {
-            // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                getJson.requestWebServer(callback,"selectMap.php","store="+storeName);
-            }
-        }.start();
+
 
         final NGeoPoint myLocation = getLocat();
         switch (getIntent().getStringExtra("type")){
@@ -92,13 +87,23 @@ public class MyMap extends NMapActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                          if(myLocation == null){
-                            Toast.makeText(getApplicationContext(),"없음",Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            getJson.requestWebServer(callback, "php", "store=" + storeName,
-                                    "lati="+ myLocation.getLatitude(), "longi"+myLocation.getLongitude());
-                        }}
+                        int markerId = NMapPOIflagType.PIN;
+                        // set POI data
+                        NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
+                        poiData.beginPOIdata(1);
+
+
+                        poiData.addPOIitem(127.061230, 37.548048, "소셜캠퍼스", markerId, 0);
+
+
+                        poiData.endPOIdata();
+
+                        // create POI data overlay
+                        NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+
+                        // show all POI data
+                        poiDataOverlay.showAllPOIdata(0);
+                    }
                 });
                 break;
             case "showOne":
@@ -139,46 +144,25 @@ public class MyMap extends NMapActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                try {
-                    JSONArray jsonArray = new JSONArray(mJsonString);
-                    Log.d("url", mJsonString);
-                    int markerId = NMapPOIflagType.PIN;
-                    int length = jsonArray.length();
-                    String lon = null;
-                    String lat = null;
-
-                    // set POI data
-                    NMapPOIdata poiData = new NMapPOIdata(length, mMapViewerResourceProvider);
-                    poiData.beginPOIdata(length);
-
-                    for (int i = 0; i < length; i++) {
-
-                        JSONObject item = jsonArray.getJSONObject(i);
-
-                        String name = item.getString(TAG_NAME);
-                        String address = item.getString(TAG_ADDRESS);
-                        String phone = item.getString(TAG_PHONE);
-                        lon = item.getString(TAG_LON);
-                        lat = item.getString(TAG_LAT);
+                int markerId = NMapPOIflagType.PIN;
+                // set POI data
+                NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
+                poiData.beginPOIdata(1);
 
 
-                        poiData.addPOIitem(Double.parseDouble(lon), Double.parseDouble(lat), name, markerId, 0);
+                poiData.addPOIitem(126.918564, 37.614219, "뚜레쥬르(불광현대)", markerId, 0);
 
-                    }
-                    poiData.endPOIdata();
 
-                    // create POI data overlay
-                    NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+                poiData.endPOIdata();
 
-                    // show all POI data
-                    poiDataOverlay.showAllPOIdata(0);
-                    mMapController.setMapCenter(new NGeoPoint(Float.parseFloat(lon), Float.parseFloat(lat)), 12);
+                // create POI data overlay
+                NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
 
-                } catch (JSONException e) {
-                    Log.d(TAG, "getResult : ", e);
-                }
+                // show all POI data
+                poiDataOverlay.showAllPOIdata(0);
 
             }
+
         });
     }
 

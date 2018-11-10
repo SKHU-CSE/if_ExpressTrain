@@ -1,0 +1,32 @@
+ <link rel="stylesheet" type="text/css" href="post.css">
+
+<form class="container2" action="/apply/create" method="post">
+ <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <div class="bd3">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">가게이름</label>
+    <input type="text" class="form-control" name="store_name" id="exampleFormControlInput1">
+  </div>
+   <div class="form-group">
+    <label for="exampleFormControlSelect1">카테고리</label>
+    <select class="form-control" name="category_id" id="exampleFormControlSelect1">
+      <option value=1>한식</option>
+      <option value=2>중식</option>
+      <option value=3>분식</option>
+      <option value=4>제과점</option>
+      <option value=5>패스트푸드</option>
+      <option value=6>부식</option>
+    </select>
+   </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">주소</label>
+    <input type="text" class="form-control" name="address" id="exampleFormControlInput1">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">전화번호</label>
+    <input type="text" class="form-control" name="phone" id="exampleFormControlInput1">
+  </div>
+
+ <div class="post_bt"><button type="submit" class="btn btn-outline-fill">신청하기</button></div>
+</div>
+</form>

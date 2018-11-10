@@ -106,14 +106,14 @@ public class StoreContent extends AppCompatActivity {
         setContentView(R.layout.activity_store_content);
         Intent intent = getIntent();
         TextView tv=findViewById(R.id.content_Store_name);
-        tv.setText(intent.getStringExtra("STORE_NAME"));
+        store_name=intent.getStringExtra("STORE_NAME");
+        tv.setText(store_name);
         tv=findViewById(R.id.content_Store_address);
         tv.setText(intent.getStringExtra("STORE_Address"));
         tv=findViewById(R.id.content_Store_phone);
         tv.setText(intent.getStringExtra("STORE_Phone"));
         db=new DBOpenHelper(this);
         db.open();
-        store_name = intent.getStringExtra("STORE_NAME");
         mRecycler_menu = findViewById(R.id.content_menu_image);
         mRecycler_content = findViewById(R.id.content_another);
 
@@ -252,12 +252,7 @@ public class StoreContent extends AppCompatActivity {
             Log.d(TAG, "서버에서 응답한 Body:" + body);
             mJsonString = body;
             getResult();
-            new Thread() {
-                public void run() {
-                    // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                    json.requestWebServer(callback2,"commentview.php","store="+store_name);
-                }
-            }.start();
+
         }
     };
 
@@ -273,6 +268,12 @@ public class StoreContent extends AppCompatActivity {
             String body = response.body().string();
             Log.d(TAG, "서버에서 응답한 Body:" + body);
 
+            new Thread() {
+                public void run() {
+                    // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                    json.requestWebServer(callback2,"commentview.php","store="+store_name);
+                }
+            }.start();
         }
     };
     private final Callback callback2 = new Callback() {
@@ -315,6 +316,7 @@ public class StoreContent extends AppCompatActivity {
             StoreContent.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     //Handle UI here
                     storeAdapter2.notifyDataSetChanged();
                 }
@@ -324,8 +326,6 @@ public class StoreContent extends AppCompatActivity {
         } catch (JSONException e) {
             Log.d(TAG, "getResult : ", e);
 
-
-            Handler handler = new Handler(Looper.getMainLooper());
 
 
         }
