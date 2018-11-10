@@ -19,7 +19,8 @@ $res=mysqli_query($conn, $sql);
 $bolder = $res->num_rows;  //행갯수
 
 $path = "uploads/".$bolder.".jpg";
-$serverip = "52.14.45.167/$path";
+$serverip = "http://ec2-52-14-45-167.us-east-2.compute.amazonaws.com/$path";
+
 $sql = "INSERT INTO MENU(STORE_NUM, MENU_IMG) VALUES('$store_num', '$serverip')";
 if(mysqli_query($conn, $sql)){
   file_put_contents($path, base64_decode($image));
