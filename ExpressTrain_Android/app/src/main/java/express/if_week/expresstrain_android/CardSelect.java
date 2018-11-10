@@ -12,7 +12,8 @@ import android.widget.RelativeLayout;
 
 public class CardSelect extends AppCompatActivity {
 
-    int selected = -1;
+    int selectedID = -1;
+    String cardnum = "";
     RelativeLayout dreamTree;
     RelativeLayout dreamJaram;
     RelativeLayout gDream;
@@ -38,18 +39,22 @@ public class CardSelect extends AppCompatActivity {
         String title = "";
         String message = "선택한 카드의 가맹점 목록을 보시겠습니까?";
 
-        switch (selected) {
+        switch (selectedID) {
             case R.id.rlDreamtree:
                 title = "꿈나무 카드";
+                cardnum = "0";
                 break;
 
             case R.id.rlDreamjaram:
                 title = "꿈자람 카드";
+                cardnum ="1";
                 break;
 
             case R.id.rlGdream:
                 title = "지드림 카드";
+                cardnum = "2";
                 break;
+
             default:
                 title = "카드를 선택하세요";
                 message = "선택한 카드가 없습니다.";
@@ -61,14 +66,15 @@ public class CardSelect extends AppCompatActivity {
         final String finalTitle = title;
         alertDialogBuilder
                 .setTitle(title)
-                .setMessage(message)
+                .setMessage(message + cardnum)
                 .setPositiveButton("확인",
                         new DialogInterface.OnClickListener() {
                             public void onClick(
                                     DialogInterface dialog, int id) {
 
                                 Intent intent = new Intent(CardSelect.this, MainActivity.class);
-                                intent.putExtra("cardtype", finalTitle);
+                                intent.putExtra("cardname", finalTitle);
+                                intent.putExtra("cardtype", cardnum);
 
                                 startActivity(intent);
                                 CardSelect.this.finish();
@@ -95,7 +101,7 @@ public class CardSelect extends AppCompatActivity {
         public void onClick(View v) {
 
             int id = v.getId();
-            selected = id;
+            selectedID = id;
 
             switch (id) {
                 case R.id.rlDreamtree:
