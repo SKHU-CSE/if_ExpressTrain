@@ -117,13 +117,6 @@ public class StoreContent extends AppCompatActivity {
 
 
 
-
-        arrayList_content.add(new Store_item(4, "장희승", "ㅇㅁㅈㅇㅁㅈㅇ", "2018.11.7", null));
-        arrayList_content.add(new Store_item(4, "함진경", "젤리 조아", "2018.11.8", null));
-        arrayList_content.add(new Store_item(4, "임수현", "글자 수를 테스트해보자 ㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅇㅁㅇㅁㅇㅇㅁㅇㅁㅇㅁㅇ", "2018.11.9", null));
-        arrayList_content.add(new Store_item(4, "양민욱", "순조롭다~~", "2018.11.10", null));
-        arrayList_content.add(new Store_item(4, "김남수", "ㅎㅎㅎㅎ", "2018.11.11", null));
-
         Button button = findViewById(R.id.Content_before);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +148,13 @@ public class StoreContent extends AppCompatActivity {
                 json.requestWebServer(callback,"menuView.php","store="+store_name);
             }
         }.start();
+
+        new Thread() {
+            public void run() {
+                // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                json.requestWebServer(callback2,"commentview.php","store="+store_name);
+            }
+        }.start();
     }
 
 
@@ -173,53 +173,110 @@ public class StoreContent extends AppCompatActivity {
         }
     };
 
-    private void getResult() {
-         try{
-        JSONArray jsonArray = new JSONArray(mJsonString);
-        Log.d("url", mJsonString);
-        int markerId = NMapPOIflagType.PIN;
-        int length = jsonArray.length();
-        String lon = null;
-        String lat = null;
+    private final Callback callback2 = new Callback() {
+        @Override
+        public void onFailure(okhttp3.Call call, IOException e) {
+            Log.d(TAG, "콜백오류:" + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(okhttp3.Call call, Response response) throws IOException {
+            String body = response.body().string();
+            Log.d(TAG, "서버에서 응답한 Body:" + body);
+
+            getResult2(body);
+        }
+    };
+    private void getResult2(String s) {
+        try {
+            JSONArray jsonArray = new JSONArray(mJsonString);
+            Log.d("url", mJsonString);
+            int markerId = NMapPOIflagType.PIN;
+            int length = jsonArray.length();
+            String lon = null;
+            String lat = null;
 
 
-        for (int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++) {
 
-            JSONObject item = jsonArray.getJSONObject(i);
+                JSONObject item = jsonArray.getJSONObject(i);
 
-            String menu = item.getString("MENU_IMG");
-
-            //  URL url=new URL(menu.replace("\\",""));
-            URL url=new URL(menu);
-            HttpURLConnection conn=(HttpURLConnection)url.openConnection();
-            conn.setDoInput(true);
-            conn.connect();
-            InputStream is=conn.getInputStream();
-
-            storeAdapter1.addMenu(new Store_item(3, "", "", "", BitmapFactory.decodeStream(is)));
+                String name = item.getString("name");
+                String content = item.getString("content");
+                String time = item.getString("time");
 
 
+                arrayList_content.add(new Store_item(4, name, content, time, null));
+
+
+            }
+
+            StoreContent.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //Handle UI here
+                    storeAdapter2.notifyDataSetChanged();
+                }
+            });
+
+
+        } catch (JSONException e) {
+            Log.d(TAG, "getResult : ", e);
+
+
+            Handler handler = new Handler(Looper.getMainLooper());
 
 
         }
-
-             StoreContent.this.runOnUiThread(new Runnable() {
-                 @Override
-                 public void run() {
-                     //Handle UI here
-                     storeAdapter1.notifyDataSetChanged();
-                 }
-             });
-
-
-
-         } catch (JSONException e) {
-        Log.d(TAG, "getResult : ", e);
-    } catch (MalformedURLException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
     }
+
+    private void getResult() {
+        try{
+            JSONArray jsonArray = new JSONArray(mJsonString);
+            Log.d("url", mJsonString);
+            int markerId = NMapPOIflagType.PIN;
+            int length = jsonArray.length();
+            String lon = null;
+            String lat = null;
+
+
+            for (int i = 0; i < length; i++) {
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                String menu = item.getString("MENU_IMG");
+
+                //  URL url=new URL(menu.replace("\\",""));
+                URL url=new URL(menu);
+                HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream is=conn.getInputStream();
+
+                storeAdapter1.addMenu(new Store_item(3, "", "", "", BitmapFactory.decodeStream(is)));
+
+
+
+
+            }
+
+            StoreContent.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //Handle UI here
+                    storeAdapter1.notifyDataSetChanged();
+                }
+            });
+
+
+
+        } catch (JSONException e) {
+            Log.d(TAG, "getResult : ", e);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Handler handler = new Handler(Looper.getMainLooper());
 
