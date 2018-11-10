@@ -82,7 +82,6 @@ public class CardSelect extends AppCompatActivity {
                                 dialog.cancel();
                             }
                         });
-
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 

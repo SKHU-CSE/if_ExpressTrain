@@ -6,25 +6,43 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.android.navermap.NMapPOIflagType;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static android.content.ContentValues.TAG;
 
 public class StoreContent extends AppCompatActivity {
 
@@ -37,7 +55,10 @@ public class StoreContent extends AppCompatActivity {
     ArrayList<Store_item> arrayList_menu;
     ArrayList<Store_item> arrayList_content;
     String store_name;
-
+    GetJson json;
+    String mJsonString;
+    StoreAdapter storeAdapter1;
+    StoreAdapter storeAdapter2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,15 +75,14 @@ public class StoreContent extends AppCompatActivity {
         mLayoutManager_menu = new LinearLayoutManager(this);
         ((LinearLayoutManager) mLayoutManager_menu).setOrientation(LinearLayout.HORIZONTAL);
         mLayoutManager_content=new LinearLayoutManager(this);
-
+        json=new GetJson();
      arrayList_menu=new ArrayList<Store_item>();
       arrayList_content=new ArrayList<Store_item>();
         mRecycler_menu.setLayoutManager(mLayoutManager_menu);
         mRecycler_content.setLayoutManager(mLayoutManager_content);
         mRecycler_content.setNestedScrollingEnabled(false);
 
-
-        mRecycler_menu.setAdapter(new StoreAdapter(arrayList_menu,this, new StoreAdapter.ButtonClickListener() {
+        storeAdapter1=new StoreAdapter(arrayList_menu,this, new StoreAdapter.ButtonClickListener() {
             @Override
             public void ContentOnClick(View v,int position) {
             }
@@ -70,9 +90,10 @@ public class StoreContent extends AppCompatActivity {
             @Override
             public void MapOnClick(View v,int position) {
             }
-        }));
+        });
+        mRecycler_menu.setAdapter(storeAdapter1);
 
-        mRecycler_content.setAdapter(new StoreAdapter(arrayList_content,this, new StoreAdapter.ButtonClickListener() {
+        storeAdapter2=new StoreAdapter(arrayList_content,this, new StoreAdapter.ButtonClickListener() {
             @Override
             public void ContentOnClick(View v,int position) {
             }
@@ -80,15 +101,9 @@ public class StoreContent extends AppCompatActivity {
             @Override
             public void MapOnClick(View v,int position) {
             }
-        }));
+        });
+        mRecycler_content.setAdapter(storeAdapter2);
 
-
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test1)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test5)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test2)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test4)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test2)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test1)));
 
 
         arrayList_content.add(new Store_item(4,"장희승","ㅇㅁㅈㅇㅁㅈㅇ","2018.11.7",null));
@@ -117,9 +132,83 @@ public class StoreContent extends AppCompatActivity {
                         "Select Picture"), 1);
             }
         });
+
+        new Thread() {
+            public void run() {
+                // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                json.requestWebServer(callback,"menuView.php","store="+store_name);
+            }
+        }.start();
     }
 
-    @Override
+    private final Callback callback = new Callback() {
+        @Override
+        public void onFailure(okhttp3.Call call, IOException e) {
+            Log.d(TAG, "콜백오류:" + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(okhttp3.Call call, Response response) throws IOException {
+            String body = response.body().string();
+            Log.d(TAG, "서버에서 응답한 Body:" + body);
+            mJsonString = body;
+            getResult();
+        }
+    };
+
+    private void getResult() {
+
+
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONArray jsonArray = new JSONArray(mJsonString);
+                    Log.d("url", mJsonString);
+                    int markerId = NMapPOIflagType.PIN;
+                    int length = jsonArray.length();
+                    String lon = null;
+                    String lat = null;
+
+
+                    for (int i = 0; i < length; i++) {
+
+                        JSONObject item = jsonArray.getJSONObject(i);
+
+                        String menu = item.getString("MENU_IMG");
+
+                      //  URL url=new URL(menu.replace("\\",""));
+                        URL url=new URL(menu);
+                        HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+                        conn.setDoInput(true);
+                        conn.connect();
+                        InputStream is=conn.getInputStream();
+
+
+
+                        arrayList_menu.add(new Store_item(3, "", "", "", BitmapFactory.decodeStream(is)));
+
+
+                    }
+                    storeAdapter1.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    Log.d(TAG, "getResult : ", e);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+
+
+        @Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (resultCode == RESULT_OK) {
