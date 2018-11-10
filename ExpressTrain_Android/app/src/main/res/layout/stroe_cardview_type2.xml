@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/card_2_title"
             android:layout_marginLeft="25dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="20dp"
             android:text="서울시"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/card_2_address"
             android:layout_toRightOf="@id/card_2_showmap"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="70dp"
             android:background="@null"
             android:text="댓글 보기"
             android:textColor="#aaaaaa"

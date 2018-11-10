@@ -49,15 +49,23 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (viewType) {
             case 0:
                 View v1 = inflater.inflate(R.layout.my_category_list, viewGroup, false);
-                viewHolder = new ViewHolder(v1);
+                viewHolder = new Textview_ViewHolder(v1);
                 break;
             case 1:
                 View v2 = inflater.inflate(R.layout.store_cardview, viewGroup, false);
                 viewHolder = new VIewHolder2(v2);
                 break;
+            case 2:
+                View v3 = inflater.inflate(R.layout.stroe_cardview_type2, viewGroup, false);
+                viewHolder = new ViewHolder3(v3);
+                break;
+            case 3:
+                View v4 = inflater.inflate(R.layout.content_image, viewGroup, false);
+                viewHolder = new Image_ViewHolder(v4);
+                break;
             default:
-                View v = inflater.inflate(R.layout.stroe_cardview_type2, viewGroup, false);
-                viewHolder = new ViewHolder3(v);
+                View v5 = inflater.inflate(R.layout.comtent_profile, viewGroup, false);
+                viewHolder = new Content_ViewHolder(v5);
                 break;
         }
         return viewHolder;
@@ -67,35 +75,39 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         switch (viewHolder.getItemViewType()) {
             case 0:
-                ViewHolder vh1 = (ViewHolder) viewHolder;
+                Textview_ViewHolder vh1 = (Textview_ViewHolder) viewHolder;
                 configureViewHolder1(vh1, position);
                 break;
             case 1:
                 VIewHolder2 vh2 = (VIewHolder2) viewHolder;
                 configureViewHolder2(vh2, position);
                 break;
-            default:
+            case 2:
                 ViewHolder3 vh = (ViewHolder3) viewHolder;
-                configureDefaultViewHolder(vh, position);
+                configureViewHolder3(vh, position);
                 break;
+
+            case 3:  // image하나 메모
+                Image_ViewHolder vh3 = (Image_ViewHolder) viewHolder;
+                configureImage_ViewHolder(vh3, position);
+                break;
+            case 4:  // content
+                Content_ViewHolder vh4=(Content_ViewHolder)viewHolder;
+                configureContent_ViewHolder(vh4,position);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mDataset.get(position).Type==0) {
-            return 0;
-        } else if (mDataset.get(position).Type==1) {
-            return 1;
-        }
-        return -1;
+
+        return mDataset.get(position).Type;
     }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataset.size();
     }
-    private void configureDefaultViewHolder(ViewHolder3 vh, int position) {
+    private void configureViewHolder3(ViewHolder3 vh, int position) {
         vh.mAddress.setText(mDataset.get(position).getAddress());
         vh.mTitle.setText(mDataset.get(position).getTitle());
         vh.phone.setText(mDataset.get(position).getPhone());
@@ -115,7 +127,16 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    private void configureViewHolder1(ViewHolder vh1, int position) {
+    private void configureContent_ViewHolder(Content_ViewHolder vh1, int position) {
+        vh1.content.setText(mDataset.get(position).getAddress());
+        vh1.name.setText(mDataset.get(position).getTitle());
+        vh1.time.setText(mDataset.get(position).getPhone());
+    }
+    private void configureImage_ViewHolder(Image_ViewHolder vh1, int position) {
+        vh1.mTitle.setImageBitmap(mDataset.get(position).bitmap);
+    }
+
+    private void configureViewHolder1(Textview_ViewHolder vh1, int position) {
         vh1.mTitle.setText(mDataset.get(position).getTitle());
     }
 

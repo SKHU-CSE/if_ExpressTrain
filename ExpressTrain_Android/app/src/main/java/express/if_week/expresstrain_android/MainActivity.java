@@ -82,17 +82,17 @@ public class MainActivity extends AppCompatActivity {
                 new RecycleViewItemClickListener(getApplicationContext(), mRecyclerView, new RecycleViewItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                      final CardView cardView=view.findViewById(R.id.card_2_card);
-                      final RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) cardView.getLayoutParams();
+                        final CardView cardView=view.findViewById(R.id.card_2_card);
+                        final RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) cardView.getLayoutParams();
                         ValueAnimator animator=null;
 
-                      if(!arrayList_store2.get(position).expend) {
-                          arrayList_store2.get(position).expend=true;
-                         animator = ValueAnimator.ofInt(layoutParams.height,layoutParams.height+100);
-                          }else {
-                          arrayList_store2.get(position).expend=false;
-                          animator = ValueAnimator.ofInt(layoutParams.height, layoutParams.height-100);
-                      }
+                        if(!arrayList_store2.get(position).expend) {
+                            arrayList_store2.get(position).expend=true;
+                            animator = ValueAnimator.ofInt(layoutParams.height,layoutParams.height+100);
+                        }else {
+                            arrayList_store2.get(position).expend=false;
+                            animator = ValueAnimator.ofInt(layoutParams.height, layoutParams.height-100);
+                        }
                         if(animator!=null) {
                             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                 @Override
@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onLongItemClick(View view, int position) {
                         //      Toast.makeText(getApplicationContext(),position+"번 째 아이템 롱 클릭",Toast.LENGTH_SHORT).show();
+
                     }
                 }));
 
@@ -147,21 +148,21 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        arrayList_store.add(new Store_item(1,"장희승","인천광역시 검단","010-4012-2423"));
-        arrayList_store.add(new Store_item(1,"임수현","서울시 검단","010-4012-2423"));
-        arrayList_store.add(new Store_item(1,"김남수","서울시 목동","010-4012-2423"));
-        arrayList_store.add(new Store_item(1,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423"));
+        arrayList_store.add(new Store_item(1,"장희승","인천광역시 검단","010-4012-2423",null));
+        arrayList_store.add(new Store_item(1,"임수현","서울시 검단","010-4012-2423",null));
+        arrayList_store.add(new Store_item(1,"김남수","서울시 목동","010-4012-2423",null));
+        arrayList_store.add(new Store_item(1,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423",null));
 
 
-        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423"));
+        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423",null));
 
-        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423"));
+        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423",null));
 
 
         //arrayList_store.add()
