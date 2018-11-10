@@ -29,7 +29,8 @@
         <activity android:name=".StoreContent" />
         <activity android:name=".MyMap" />
         <activity android:name=".StartMenu" />
-        <activity android:name=".CardSelect"></activity>
+        <activity android:name=".CardSelect" />
+        <activity android:name=".Login"></activity>
     </application>
 
 </manifest>
