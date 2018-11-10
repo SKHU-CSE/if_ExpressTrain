@@ -36,9 +36,9 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface ButtonClickListener {
 
-        void ContentOnClick(View v);
+        void ContentOnClick(View v,int position);
 
-        void MapOnClick(View v);
+        void MapOnClick(View v,int position);
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -107,7 +107,7 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemCount() {
         return mDataset.size();
     }
-    private void configureViewHolder3(ViewHolder3 vh, int position) {
+    private void configureViewHolder3(ViewHolder3 vh, final int position) {
         vh.mAddress.setText(mDataset.get(position).getAddress());
         vh.mTitle.setText(mDataset.get(position).getTitle());
         vh.phone.setText(mDataset.get(position).getPhone());
@@ -115,13 +115,13 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         vh.bContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.ContentOnClick(v);
+                listener.ContentOnClick(v,position);
             }
         });
         vh.bMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.MapOnClick(v);
+                listener.MapOnClick(v,position);
             }
         });
 
