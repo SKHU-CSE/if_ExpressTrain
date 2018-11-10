@@ -13,15 +13,36 @@ import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 
-public class MyMap extends NMapActivity{
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static android.content.ContentValues.TAG;
+
+public class MyMap extends NMapActivity {
     private NMapView mMapView;// 지도 화면 View
     private final String CLIENT_ID = "N9b68ZJe0OThPeeDBC_b";// 애플리케이션 클라이언트 아이디 값
 
-    // create resource provider
-    NMapViewerResourceProvider mMapViewerResourceProvider=null;
-    NMapOverlayManager mOverlayManager=null;
+    private static final String LOG_TAG = "";
+    private static final String TAG_JSON = "";
+    private static final String TAG_NAME = "";
+    private static final String TAG_ADDRESS = "";
+    private static final String TAG_PHONE = "";
+    private static final String TAG_LAT = "";
+    private static final String TAG_LON = "";
 
-    private static final String LOG_TAG = "MyMap";
+    private GetJson getJson = new GetJson();
+    // create resource provider
+    NMapViewerResourceProvider mMapViewerResourceProvider = null;
+    NMapOverlayManager mOverlayManager = null;
+
+    String mJsonString = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,22 +62,64 @@ public class MyMap extends NMapActivity{
         mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
         mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
 
-        int markerId = NMapPOIflagType.PIN;
+        new Thread() {
+            public void run() {
+            // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                getJson.requestWebServer("STORE", callback);
+            }
+        }.start();
+    }
 
-        //NMapPOIdataOverlay 객체 생성 - 여러개의 오버레이 아이템들을 하나의 오버레이 객체로 관리하기 위해
+    private final Callback callback = new Callback() {
+        @Override
+        public void onFailure(okhttp3.Call call, IOException e) {
+            Log.d(TAG, "콜백오류:" + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(okhttp3.Call call, Response response) throws IOException {
+            String body = response.body().string();
+            Log.d(TAG, "서버에서 응답한 Body:" + body);
+            mJsonString = body;
+            getResult();
+        }
+    };
+
+    private void getResult(){
+        try {
+            JSONArray jsonArray = new JSONArray(mJsonString);
+
+            int markerId = NMapPOIflagType.PIN;
+            int length = jsonArray.length();
+
             // set POI data
-        NMapPOIdata poiData = new NMapPOIdata(2, mMapViewerResourceProvider);
-        poiData.beginPOIdata(2);
-        poiData.addPOIitem(127.0630205, 37.5091300, "Pizza 777-111", markerId, 0);
-        poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
-        poiData.endPOIdata();
+            NMapPOIdata poiData = new NMapPOIdata(length, mMapViewerResourceProvider);
+            poiData.beginPOIdata(length);
+
+            for(int i=0;i<length;i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                String name = item.getString(TAG_NAME);
+                String address = item.getString(TAG_ADDRESS);
+                String phone = item.getString(TAG_PHONE);
+                String lon = item.getString(TAG_LON);
+                String lat = item.getString(TAG_LAT);
+
+                poiData.addPOIitem(Float.parseFloat(lon), Float.parseFloat(lat), name, markerId, 0);
+            }
+            poiData.endPOIdata();
+
             // create POI data overlay
-        NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+            NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
 
-
-        // 해당 오버레이 객체에 포함된 전체 아이템이 화면에 표시되도록 지도 중심 및 축적 레벨을 변경하려면 아래와 같이 구현합니다.
             // show all POI data
-        poiDataOverlay.showAllPOIdata(0);
+            poiDataOverlay.showAllPOIdata(0);
+
+        } catch (JSONException e) {
+            Log.d(TAG, "getResult : ", e);
+        }
+
     }
 
     public void onCalloutClick(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
@@ -64,11 +127,32 @@ public class MyMap extends NMapActivity{
         Toast.makeText(MyMap.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
     }
 
+
+
+
     public void onFocusChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
         if (item != null) {
             Log.i(LOG_TAG, "onFocusChanged: " + item.toString());
         } else {
             Log.i(LOG_TAG, "onFocusChanged: ");
         }
+    }
+
+    public void setMarker(double longitutde, double latitude, String name) {
+        int markerId = NMapPOIflagType.PIN;
+
+        //NMapPOIdataOverlay 객체 생성 - 여러개의 오버레이 아이템들을 하나의 오버레이 객체로 관리하기 위해
+        // set POI data
+        NMapPOIdata poiData = new NMapPOIdata(1, mMapViewerResourceProvider);
+        poiData.beginPOIdata(1);
+        poiData.addPOIitem(longitutde, latitude, name, markerId, 0);
+        poiData.endPOIdata();
+        // create POI data overlay
+        NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+
+
+        // 해당 오버레이 객체에 포함된 전체 아이템이 화면에 표시되도록 지도 중심 및 축적 레벨을 변경하려면 아래와 같이 구현합니다.
+        // show all POI data
+        poiDataOverlay.showAllPOIdata(0);
     }
 }
