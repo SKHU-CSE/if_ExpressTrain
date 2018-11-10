@@ -6,8 +6,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nhn.android.maps.NMapActivity;
+import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapView;
 import com.android.navermap.*;
+import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.overlay.NMapPOIdata;
 import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
@@ -26,6 +28,7 @@ import static android.content.ContentValues.TAG;
 
 public class MyMap extends NMapActivity {
     private NMapView mMapView;// 지도 화면 View
+    private NMapController mMapController;
     private final String CLIENT_ID = "N9b68ZJe0OThPeeDBC_b";// 애플리케이션 클라이언트 아이디 값
 
     private static final String LOG_TAG = "";
@@ -49,6 +52,8 @@ public class MyMap extends NMapActivity {
         setContentView(R.layout.activity_my_map);
 
         mMapView = new NMapView(this);
+        mMapController = mMapView.getMapController();
+
         mMapView.setClientId(CLIENT_ID); // 클라이언트 아이디 값 설정
         mMapView.setClickable(true);
         mMapView.setEnabled(true);
@@ -65,7 +70,7 @@ public class MyMap extends NMapActivity {
         new Thread() {
             public void run() {
             // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                getJson.requestWebServer("STORE", callback);
+                getJson.requestWebServer(callback);
             }
         }.start();
     }
@@ -91,6 +96,8 @@ public class MyMap extends NMapActivity {
 
             int markerId = NMapPOIflagType.PIN;
             int length = jsonArray.length();
+            String lon=null;
+            String lat=null;
 
             // set POI data
             NMapPOIdata poiData = new NMapPOIdata(length, mMapViewerResourceProvider);
@@ -103,8 +110,8 @@ public class MyMap extends NMapActivity {
                 String name = item.getString(TAG_NAME);
                 String address = item.getString(TAG_ADDRESS);
                 String phone = item.getString(TAG_PHONE);
-                String lon = item.getString(TAG_LON);
-                String lat = item.getString(TAG_LAT);
+                lon = item.getString(TAG_LON);
+                lat = item.getString(TAG_LAT);
 
                 poiData.addPOIitem(Float.parseFloat(lon), Float.parseFloat(lat), name, markerId, 0);
             }
@@ -115,6 +122,7 @@ public class MyMap extends NMapActivity {
 
             // show all POI data
             poiDataOverlay.showAllPOIdata(0);
+            mMapController.setMapCenter(new NGeoPoint(Float.parseFloat(lon), Float.parseFloat(lat)), 12);
 
         } catch (JSONException e) {
             Log.d(TAG, "getResult : ", e);

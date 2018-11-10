@@ -8,7 +8,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 public class GetJson {
-    final String myURL = "52.14.45.167/index.php";
+    final String myURL = "http://ec2-52-14-45-167.us-east-2.compute.amazonaws.com/getdb.php?cardtype=0";
 
     private OkHttpClient client;
     private static GetJson instance = new GetJson();
@@ -25,7 +25,7 @@ public class GetJson {
     /**
      * 웹 서버로 요청을 한다.
      */
-    public void requestWebServer(String parameter, Callback callback) {
+    public void requestWebServer(Callback callback) {
 
 
         RequestBody body = new FormBody.Builder()
@@ -36,6 +36,4 @@ public class GetJson {
                 .build();
         client.newCall(request).enqueue(callback); //통신후 콜백될 함수
     }
-
-
 }
