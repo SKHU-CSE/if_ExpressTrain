@@ -37,7 +37,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/round_stroke"
-            android:text="test"
+            android:text="로그인"
+            android:onClick="gotoLogin"
             android:textColor="#ffffff" />
     </RelativeLayout>
 

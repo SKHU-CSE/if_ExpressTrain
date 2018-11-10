@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Member_Register">
+
+
+    <TextView
+        android:id="@+id/register_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="30dp"
+        android:text="ID:"
+        android:textColor="#000000"
+
+        android:textSize="23sp"
+
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/register_id_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/register_pwd_edit"
+        android:layout_alignTop="@id/register_id"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/register_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_id"
+        android:layout_alignLeft="@id/register_id"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:text="password:"
+        android:textColor="#000000"
+        android:paddingTop="10dp"
+        android:textSize="23sp"
+
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@id/register_pwd_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_id_edit"
+        android:layout_alignTop="@id/register_pwd"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/register_pwd"
+        android:maxLines="1" />
+
+
+    <TextView
+        android:id="@+id/register_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_pwd"
+        android:layout_alignLeft="@id/register_pwd"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:text="email:"
+        android:paddingTop="10dp"
+        android:textColor="#000000"
+
+        android:textSize="23sp"
+
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/register_email_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_id_edit"
+        android:layout_alignTop="@id/register_email"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/register_pwd"
+        android:maxLines="1" />
+
+    <RadioGroup
+        android:id="@+id/register_radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_email_edit"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/register_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:checked="true"
+            android:text="개인" />
+
+        <RadioButton
+            android:id="@+id/register_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="사업자" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/register_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_radio"
+        android:layout_alignLeft="@id/register_pwd"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:paddingTop="10dp"
+        android:text="email:"
+        android:textColor="#000000"
+        android:textSize="23sp"
+
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/register_name_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_radio"
+        android:layout_alignTop="@id/register_name"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/register_pwd"
+        android:maxLines="1" />
+
+    <Button
+        android:layout_width="230dp"
+        android:layout_height="80dp"
+        android:background="@drawable/round_stroke"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/register_name_edit"
+        android:layout_marginTop="40dp"
+        android:id="@+id/register_add"
+        android:text="Register"/>
+
+</RelativeLayout>

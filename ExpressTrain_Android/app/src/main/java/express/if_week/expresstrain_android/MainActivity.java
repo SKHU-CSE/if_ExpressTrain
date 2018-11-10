@@ -59,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_LON = "longitude";
     ScrollView scrollView;
     private GetJson getJson = new GetJson();
+    int choice=0;
 
     String[] category = new String[]{"한식", "중식", "분식", "제과점", "패스트푸드", "부식"};
-    private int categorynum;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +125,16 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         boolean[] checked = new boolean[]{false, false, false, false, false, false};
                         checked[position] = true;
-                        categorynum = position;
+
+                        choice=position;
+                        arrayList_store2.clear();
+                        new Thread() {
+                            public void run() {
+                                // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                                getJson.requestWebServer(callback, "getdb.php", "cardtype=" + cardnum,"categorynum="+choice);
+                            }
+                        }.start();
+
                         mAdapter = new CategoryAdapter(category, checked);
                         mRecyclerView.setAdapter(mAdapter);
                     }
@@ -207,16 +217,16 @@ public class MainActivity extends AppCompatActivity {
         mRecycler_stroeView2.setAdapter(storeAdapter2);
 
 
-        arrayList_store.add(new Store_item(1, "장희승", "인천광역시 검단", "010-4012-2423", null));
-        arrayList_store.add(new Store_item(1, "임수현", "서울시 검단", "010-4012-2423", null));
-        arrayList_store.add(new Store_item(1, "김남수", "서울시 목동", "010-4012-2423", null));
-        arrayList_store.add(new Store_item(1, "함진경", "서울특별시 여의대방로 43나길 25", "010-4012-2423", null));
+
+
 
 
         new Thread() {
             public void run() {
                 // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                getJson.requestWebServer(callback, "getdb.php", "cardtype=" + cardnum, "categorynum="+categorynum);
+
+                getJson.requestWebServer(callback, "getdb.php", "cardtype=" + cardnum,"categorynum="+choice);
+
             }
         }.start();
         //arrayList_store.add()
@@ -262,12 +272,15 @@ public class MainActivity extends AppCompatActivity {
                         String name = item.getString(TAG_NAME);
                         String address = item.getString(TAG_ADDRESS);
                         String phone = item.getString(TAG_PHONE);
+                        String type=item.getString("store_type");
                         lon = item.getString(TAG_LON);
                         lat = item.getString(TAG_LAT);
 
 
+                        if(type.equals("0"))
                         arrayList_store2.add(new Store_item(2, name, address, phone, null));
-
+                        else if(type.equals("1"))
+                            arrayList_store.add(new Store_item(1, name, address, phone, null));
 
                     }
                     storeAdapter2.notifyDataSetChanged();
