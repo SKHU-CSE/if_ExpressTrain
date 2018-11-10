@@ -1,0 +1,268 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ @font-face { font-family: 'KoPubDotumMedium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/KoPubDotumMedium.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'BMJUA'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'GoyangDeogyang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangDeogyang.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+ 
+ /*------------------------------------------------------------------nav---------------------------------------------------------------------------------------*/
+body {
+            padding: 0;
+            margin: 0;
+        }
+        header {
+            /*margin-bottom: 100px;*/
+            overflow: hidden;
+        }
+        nav {
+            height: 70px;
+	 		 font-family: 'KoPubDotumMedium'; 
+        }
+        .nav-basic {
+          /*margin-top: 1rem;*/
+            position: fixed;
+            padding: 10px 0 0 0;
+            width: 100%;
+            	 /*background-color: transparent;*/
+            	  background-color: white;
+            border: none;
+            z-index: 9999;
+        }
+        .nav-change {
+            position: fixed;
+            padding: 10px 0 0 0;
+            width: 100%;
+            /*box-shadow: 0px 0px 3px 1px #DDDDDD;*/
+            background-color: white;
+            z-index: 9999;
+        }
+        header nav ul {
+            text-align: center;
+            overflow: hidden;
+        }
+        header nav ul li {
+            list-style: none;
+            float: left;
+            margin: 0 100px 0 0;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        header nav ul li a {
+            text-decoration: none;
+            color: black;
+            padding: 20px 10px;
+        }
+        header nav ul li a:hover {
+          text-decoration: none;
+            color: #FFB03D;
+        }
+   
+   ul{
+   	/*margin-left: 5rem;*/
+   	padding-top: 0.65rem;
+   }
+       .HeaderImage {
+            position: relative;
+            background-size: cover;
+            background-repeat: no-repeat;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+     
+        .container3{
+          width: 750px;
+          height: auto;
+          margin: auto;
+          font-family: 'BMJUA';
+          margin-top: 120px;
+          margin-bottom:20px;
+      }
+      .logo{
+        /*float:right;*/
+        /*margin-right:1rem;*/
+        font-family: 'BMJUA';
+      }
+   
+/*------------------------------------------------------------------footer---------------------------------------------------------------------*/
+*{
+	margin:0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+a{
+	text-decoration: none;
+	outline: none;
+}
+.footer-main-div{
+	width: 100%;
+	height: auto;
+	margin: auto;
+	background: #272727;
+	padding:30px 0px;
+}
+.footer-social-icons{
+	width: 100%;
+	height: auto;
+	margin: auto;
+}
+.footer-social-icons ul{
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+.footer-social-icons ul li{
+	display: inline-block;
+	/*width: 50px;*/
+	/*height: 50px;*/
+	margin: 0px 10px;
+	/*border-radius: 100%;*/
+	/*background: #fd8a17;*/
+}
+.footer-social-icons ul li a{
+	color: #272727;
+	font-size: 25px;
+	display: block;
+}
+.footer-social-icons ul li a i{
+	line-height: 50px;
+}
+/*.footer-social-icons ul li:hover{*/
+/*	background:#f00;*/
+/*}*/
+.footer-social-icons ul li:hover a{
+	color: #fff;
+}
+.footer-menu-one{
+	width: 100%;
+	height: auto;
+	margin: auto;
+	margin-top:25px;
+}
+.footer-menu-one ul{
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+.footer-menu-one ul li{
+	display: inline-block;
+	margin: 0px 15px;
+}
+.footer-menu-one ul li a{
+font-family: 'KoPubDotumMedium'; 
+	font-size:15px;
+	font-weight: 600;
+	color: #fff;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+.footer-menu-one ul li a:hover{
+	color: #fd8a17;
+  text-decoration: none;
+}
+.footer-menu-two{
+	width: 100%;
+	height: auto;
+	margin: auto;
+	margin-top:15px;
+}
+.footer-menu-two ul{
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+.footer-menu-two ul li{
+	display: inline-block;
+	margin: 0px 15px;
+}
+.footer-menu-two ul li a{
+font-family: 'KoPubDotumMedium';
+	font-size:14px;
+	font-weight: 600;
+	color: #fff;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+.footer-menu-two ul li a:hover{
+	color:  #fd8a17;
+	text-decoration: none;
+}
+
+/*--------------------------------------------bottom-------------------------------------------------------------------------------------------*/
+.btn {
+  padding: .66em 2.25em;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+font-family: 'BMJUA';
+}
+.btn:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0.125em;
+  left: 0.125em;
+  
+}
+.btn:active {
+  transform: translate(0.125em, 0.125em);
+}
+.btn:active:after {
+  transform: translate(-0.125em, -0.125em);
+}
+
+.btn-outline-fill {
+  color: orange;
+  box-shadow: inset 0 0 0 0.125em #fd8a17;
+  background-color: transparent;
+  transition: color 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
+}
+.btn-outline-fill:after {
+  border-color: #fd8a17;
+}
+.btn-outline-fill:hover {
+  color: white;
+  background-color:#fd8a17;
+  box-shadow: inset 0 0 0 0.125em transparent;
+}
+
+.maintext{
+   font-family: 'GoyangDeogyang';
+}
+
+.btn-outline {
+  color:white;
+  box-shadow: inset 0 0 0 0.125em #fd8a17;
+  background-color: transparent;
+  transition: color 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
+}
+.btn-outline:after {
+  border-color: #fd8a17;
+}
+.btn-outline:hover {
+  color: white;
+  background-color:#fd8a17;
+  box-shadow: inset 0 0 0 0.125em transparent;
+}
+.map_under{
+  height: 50px;
+}
+
+.logo{
+  padding-left: 3rem;
+}

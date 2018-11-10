@@ -77,7 +77,12 @@ public class MyMap extends NMapActivity {
         mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
         mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
 
-
+        new Thread() {
+            public void run() {
+            // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                getJson.requestWebServer(callback,"selectMap.php","store="+storeName);
+            }
+        }.start();
 
         final NGeoPoint myLocation = getLocat();
         switch (getIntent().getStringExtra("type")){
