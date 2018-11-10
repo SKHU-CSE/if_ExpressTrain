@@ -55,7 +55,6 @@ public class MyMap extends NMapActivity {
 
         mMapView = new NMapView(this);
 
-
         mMapView.setClientId(CLIENT_ID); // 클라이언트 아이디 값 설정
         mMapView.setClickable(true);
         mMapView.setEnabled(true);
@@ -67,16 +66,18 @@ public class MyMap extends NMapActivity {
         mMapController = mMapView.getMapController();
         ViewGroup vg = findViewById(R.id.mymap);
         vg.addView(mMapView);
-
+        final String storeName=getIntent().getStringExtra("storeName");
         mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
         mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
 
         new Thread() {
             public void run() {
             // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                getJson.requestWebServer(callback);
+                getJson.requestWebServer(callback,"php","store="+storeName);
             }
         }.start();
+
+
     }
 
     private final Callback callback = new Callback() {

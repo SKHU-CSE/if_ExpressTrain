@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         mRecycler_stroeView.setLayoutManager(mLayoutManager_store);
         mRecycler_stroeView2.setLayoutManager(mLayoutManager_store2);
         mRecycler_stroeView2.setNestedScrollingEnabled(false);
+        final String cardnum=getIntent().getStringExtra("cardtype");
 
        Button button=findViewById(R.id.Main_before);
        button.setOnClickListener(new View.OnClickListener(){
@@ -162,25 +163,26 @@ public class MainActivity extends AppCompatActivity {
         arrayList_store2=new ArrayList<Store_item>();
         store_adapter=new StoreAdapter(arrayList_store, this, new StoreAdapter.ButtonClickListener() {
             @Override
-            public void ContentOnClick(View v) {
+            public void ContentOnClick(View v,int position) {
             }
 
             @Override
-            public void MapOnClick(View v) {
+            public void MapOnClick(View v,int position) {
             }
         });
 
         storeAdapter2=new StoreAdapter(arrayList_store2,this,new StoreAdapter.ButtonClickListener(){
 
             @Override
-            public void ContentOnClick(View v) {
+            public void ContentOnClick(View v,int position) {
                 Intent intent=new Intent(MainActivity.this,StoreContent.class);
+                intent.putExtra("STORE_NAME",arrayList_store2.get(position).title);
                 startActivity(intent);
 
             }
 
             @Override
-            public void MapOnClick(View v) {
+            public void MapOnClick(View v,int position) {
                 Intent intent=new Intent(MainActivity.this,MyMap.class);
                    startActivity(intent);
             }
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                getJson.requestWebServer(callback);
+                getJson.requestWebServer(callback,"getdb.png","cardtype="+cardnum);
             }
         }.start();
         //arrayList_store.add()
