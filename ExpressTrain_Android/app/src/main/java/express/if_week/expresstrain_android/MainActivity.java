@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -53,7 +54,16 @@ public class MainActivity extends AppCompatActivity {
         mRecycler_stroeView2.setLayoutManager(mLayoutManager_store2);
         mRecycler_stroeView2.setNestedScrollingEnabled(false);
 
+       Button button=findViewById(R.id.Main_before);
+       button.setOnClickListener(new View.OnClickListener(){
 
+           @Override
+           public void onClick(View v) {
+               Intent intent=new Intent(MainActivity.this,StartMenu.class);
+               startActivity(intent);
+               finish();
+           }
+       });
         // specify an adapter (see also next example)
         mAdapter = new CategoryAdapter(category,new boolean[]{true,false,false,false,false,false});
         mRecyclerView.setAdapter(mAdapter);
@@ -141,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void MapOnClick(View v) {
-                Intent intent=new Intent(MainActivity.this,StoreMap.class);
-                startActivity(intent);
+               // Intent intent=new Intent(MainActivity.this,StoreMap.class);
+             //   startActivity(intent);
             }
             }));
 

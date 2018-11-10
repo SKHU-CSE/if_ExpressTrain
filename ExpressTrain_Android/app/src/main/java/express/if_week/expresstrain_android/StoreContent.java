@@ -1,11 +1,13 @@
 package express.if_week.expresstrain_android;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -79,5 +81,14 @@ public class StoreContent extends AppCompatActivity {
         arrayList_content.add(new Store_item(4,"임수현","글자 수를 테스트해보자 ㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅇㅁㅇㅁㅇㅇㅁㅇㅁㅇㅁㅇ","2018.11.9",null));
         arrayList_content.add(new Store_item(4,"양민욱","순조롭다~~","2018.11.10",null));
         arrayList_content.add(new Store_item(4,"김남수","ㅎㅎㅎㅎ","2018.11.11",null));
+
+        Button button=findViewById(R.id.Content_before);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent=new Intent(StoreContent.this,MainActivity.
+                finish();
+            }
+        });
     }
 }

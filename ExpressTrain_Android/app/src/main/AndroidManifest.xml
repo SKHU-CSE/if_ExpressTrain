@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".StoreContent" />
-        <activity android:name=".StoreMap"></activity>
+        <activity android:name=".StartMenu"></activity>
     </application>
 
 </manifest>
