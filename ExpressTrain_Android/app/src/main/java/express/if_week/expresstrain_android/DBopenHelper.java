@@ -101,12 +101,12 @@ class DBOpenHelper {
 
     public void UpdateAuto(int auto)
     {
-        mDB.execSQL("UPDATE Log set auto="+auto);
+        mDB.execSQL("UPDATE Log set auto="+auto+";");
     }
 
     public void UpdateNickName(String name)
     {
-        mDB.execSQL("UPDATE Log set NickName=\'"+name+"\')");
+        mDB.execSQL("UPDATE Log set NickName=\'"+name+"\';");
     }
 
 

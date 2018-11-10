@@ -1,6 +1,7 @@
 package express.if_week.expresstrain_android;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +17,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -54,16 +58,29 @@ public class StoreContent extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        db.open();
         if(db.getautoLogin()==0)
         {
             EditText editText = findViewById(R.id.content_editText);
             editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
             editText.setFocusable(false);
         }else{
-            EditText editText = findViewById(R.id.content_editText);
+            final EditText editText = findViewById(R.id.content_editText);
             editText.setText("");
             editText.setHint("댓글 입력");
             editText.setFocusable(true);
+            editText.post(new Runnable() {
+                @Override
+                public void run() {
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    imm.showSoftInput(editText,0);
+
+                }
+            });
         }
 
     }
@@ -115,7 +132,37 @@ public class StoreContent extends AppCompatActivity {
         mRecycler_content.setLayoutManager(mLayoutManager_content);
         mRecycler_content.setNestedScrollingEnabled(false);
 
+        EditText editText=findViewById(R.id.content_editText);
+        final EditText finalEditText = editText;
+        final EditText finalEditText1 = editText;
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId)
+                {
+                    case EditorInfo.IME_ACTION_GO:
+                        if(finalEditText.getText().toString().equals(""))
+                            Toast.makeText(StoreContent.this,"입력해주세요",Toast.LENGTH_LONG).show();
+                        else
+                        {
+                            long now=System.currentTimeMillis();
+                            final Date date=new Date(now);
+                            final SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+
+                            new Thread() {
+                                public void run() {
+                                    // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                                    json.requestWebServer(callback3,"addcomment.php","STORE="+store_name,"CONTENT="+ finalEditText1.getText().toString(),
+                                    "TIME="+(sdf.format(date)));
+                                }
+                            }.start();
+                        }
+
+                }
+                return false;
+            }
+        });
         storeAdapter1=new StoreAdapter(arrayList_menu,this, new StoreAdapter.ButtonClickListener() {
 
 
@@ -156,11 +203,11 @@ public class StoreContent extends AppCompatActivity {
         });
 
         if(db.getautoLogin()==0||db.getCount()==0) {
-            EditText editText = findViewById(R.id.content_editText);
+            editText = findViewById(R.id.content_editText);
             editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
             editText.setFocusable(false);
         }else{
-            EditText editText = findViewById(R.id.content_editText);
+            editText = findViewById(R.id.content_editText);
             editText.setText("");
             editText.setHint("댓글 입력");
             editText.setFocusable(true);
@@ -205,9 +252,29 @@ public class StoreContent extends AppCompatActivity {
             Log.d(TAG, "서버에서 응답한 Body:" + body);
             mJsonString = body;
             getResult();
+            new Thread() {
+                public void run() {
+                    // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                    json.requestWebServer(callback2,"commentview.php","store="+store_name);
+                }
+            }.start();
         }
     };
 
+
+    private final Callback callback3 = new Callback() {
+        @Override
+        public void onFailure(okhttp3.Call call, IOException e) {
+            Log.d(TAG, "콜백오류:" + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(okhttp3.Call call, Response response) throws IOException {
+            String body = response.body().string();
+            Log.d(TAG, "서버에서 응답한 Body:" + body);
+
+        }
+    };
     private final Callback callback2 = new Callback() {
         @Override
         public void onFailure(okhttp3.Call call, IOException e) {

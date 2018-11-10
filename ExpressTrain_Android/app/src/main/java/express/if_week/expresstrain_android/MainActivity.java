@@ -197,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void MapOnClick(View v, int position) {
                 Intent intent = new Intent(MainActivity.this, MyMap.class);
+                intent.putExtra("STORE_NAME", arrayList_store2.get(position).title);
+                intent.putExtra("type","showOne");
                 startActivity(intent);
             }
         });
@@ -217,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
             public void MapOnClick(View v, int position) {
                 Intent intent = new Intent(MainActivity.this, MyMap.class);
                 intent.putExtra("STORE_NAME", arrayList_store2.get(position).title);
+                intent.putExtra("type","showOne");
                 startActivity(intent);
             }
         });

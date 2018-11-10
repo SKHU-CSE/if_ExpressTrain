@@ -1,14 +1,18 @@
 package express.if_week.expresstrain_android;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapController;
+import com.nhn.android.maps.NMapLocationManager;
 import com.nhn.android.maps.NMapView;
 import com.android.navermap.*;
 import com.nhn.android.maps.maplib.NGeoPoint;
@@ -29,6 +33,8 @@ import okhttp3.Response;
 import static android.content.ContentValues.TAG;
 
 public class MyMap extends NMapActivity {
+
+    ProgressDialog loadingdDialog;
     private NMapView mMapView;// 지도 화면 View
     private NMapController mMapController;
     private final String CLIENT_ID = "N9b68ZJe0OThPeeDBC_b";// 애플리케이션 클라이언트 아이디 값
@@ -45,6 +51,7 @@ public class MyMap extends NMapActivity {
     // create resource provider
     NMapViewerResourceProvider mMapViewerResourceProvider = null;
     NMapOverlayManager mOverlayManager = null;
+    NMapLocationManager mMapLocationManager = null;
 
     String mJsonString = null;
 
@@ -66,17 +73,41 @@ public class MyMap extends NMapActivity {
         mMapController = mMapView.getMapController();
         ViewGroup vg = findViewById(R.id.mymap);
         vg.addView(mMapView);
-        final String storeName=getIntent().getStringExtra("storeName");
+        final String storeName = getIntent().getStringExtra("storeName");
         mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
         mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
 
-        new Thread() {
-            public void run() {
-            // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                getJson.requestWebServer(callback,"selectMap.php","store="+storeName);
-            }
-        }.start();
 
+
+        final NGeoPoint myLocation = getLocat();
+        switch (getIntent().getStringExtra("type")){
+            case "showAll":
+                Handler handler = new Handler(Looper.getMainLooper());
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                          if(myLocation == null){
+                            Toast.makeText(getApplicationContext(),"없음",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            getJson.requestWebServer(callback, "php", "store=" + storeName,
+                                    "lati="+ myLocation.getLatitude(), "longi"+myLocation.getLongitude());
+                        }}
+                });
+                break;
+            case "showOne":
+                new Thread() {
+                    public void run() {
+                        // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                        getJson.requestWebServer(callback, "selectMap.php", "store=" + storeName);
+                    }
+                }.start();
+                break;
+
+        }
+
+        getLocat();
 
     }
 
@@ -95,7 +126,7 @@ public class MyMap extends NMapActivity {
         }
     };
 
-    private void getResult(){
+    private void getResult() {
 
 
         Handler handler = new Handler(Looper.getMainLooper());
@@ -105,17 +136,17 @@ public class MyMap extends NMapActivity {
             public void run() {
                 try {
                     JSONArray jsonArray = new JSONArray(mJsonString);
-                    Log.d("url",mJsonString);
+                    Log.d("url", mJsonString);
                     int markerId = NMapPOIflagType.PIN;
                     int length = jsonArray.length();
-                    String lon=null;
-                    String lat=null;
+                    String lon = null;
+                    String lat = null;
 
                     // set POI data
                     NMapPOIdata poiData = new NMapPOIdata(length, mMapViewerResourceProvider);
                     poiData.beginPOIdata(length);
 
-                    for(int i=0;i<length;i++){
+                    for (int i = 0; i < length; i++) {
 
                         JSONObject item = jsonArray.getJSONObject(i);
 
@@ -144,26 +175,16 @@ public class MyMap extends NMapActivity {
 
             }
         });
-
-
     }
 
-    public void onCalloutClick(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
-        // [[TEMP]] handle a click event of the callout
-        Toast.makeText(MyMap.this, "onCalloutClick: " + item.getTitle(), Toast.LENGTH_LONG).show();
+    public NGeoPoint getLocat() {
+        NMapLocationManager myLocationManager = new NMapLocationManager(this);
+        //myLocationManager.enableMyLocation(false);
+        NGeoPoint mylocation = myLocationManager.getMyLocation();
+
+
+        return mylocation;
     }
-
-
-
-
-    public void onFocusChanged(NMapPOIdataOverlay poiDataOverlay, NMapPOIitem item) {
-        if (item != null) {
-            Log.i(LOG_TAG, "onFocusChanged: " + item.toString());
-        } else {
-            Log.i(LOG_TAG, "onFocusChanged: ");
-        }
-    }
-
     public void setMarker(double longitutde, double latitude, String name) {
         int markerId = NMapPOIflagType.PIN;
 

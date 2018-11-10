@@ -136,7 +136,8 @@
         android:maxHeight="50dp"
         android:id="@+id/content_editText"
         android:layout_marginRight="10dp"
-
+        android:inputType="text"
+        android:imeOptions="actionGo"
         android:background="@drawable/stroke"
         android:layout_marginLeft="10dp"
         android:padding="10dp"
