@@ -47,6 +47,37 @@
             android:layout_below="@id/card_address"
             android:layout_alignLeft="@id/card_title"
             android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/card_showmap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_phone"
+            android:background="@null"
+            android:text="지도\n보기"
+            android:textColor="#aaaaaa"
+            android:textSize="15sp"
+            android:layout_alignParentLeft="true"/>
+
+        <View
+            android:layout_width="1.2dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/card_phone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="7dp"
+            android:background="#aaaaaa"></View>
+
+        <Button
+            android:id="@+id/card_showcontent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_phone"
+            android:layout_toRightOf="@id/card_showmap"
+            android:background="@null"
+            android:text="댓글\n보기"
+            android:textColor="#aaaaaa"
+            android:textSize="15sp" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
