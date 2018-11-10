@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void goTocard(View view){
-        Intent intent=new Intent(this, MyMap.class);
+        Intent intent=new Intent(MainActivity.this, CardSelect.class);
         startActivity(intent);
 
     }

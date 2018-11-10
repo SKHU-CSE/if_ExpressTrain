@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CardSelect">
+
+    <RelativeLayout
+        android:id="@+id/cardSelect_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="13dp">
+
+        <Button
+            android:id="@+id/_before"
+            android:layout_width="17dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/before" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="급행열차"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/round_stroke"
+            android:text="선택"
+            android:textColor="#ffffff"
+            android:onClick="onClickSelect"/>
+
+    </RelativeLayout>
+
+    <TableLayout
+        android:id="@+id/tl_card"
+        android:layout_below="@id/cardSelect_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="0,1,2">
+
+        <TableRow>
+            <RelativeLayout
+                android:id="@+id/rlDreamtree">
+                <ImageView
+                    android:id="@+id/imgDreamtree"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/dream_tree"/>
+                <TextView
+                    android:layout_below="@id/imgDreamtree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="꿈나무 카드"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlDreamjaram">
+                <ImageView
+                    android:id="@+id/imgDreamjaram"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/dream_jaram_kimhae"/>
+                <TextView
+                    android:layout_below="@id/imgDreamjaram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="꿈자람 카드"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlGdream">
+                <ImageView
+                    android:id="@+id/imgGdream"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/gdream"/>
+                <TextView
+                    android:layout_below="@id/imgGdream"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지드림 카드"/>
+            </RelativeLayout>
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>
