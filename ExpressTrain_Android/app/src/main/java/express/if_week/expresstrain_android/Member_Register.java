@@ -34,6 +34,7 @@ public class Member_Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member__register);
 
+
         json=new GetJson();
         radioGroup=findViewById(R.id.register_radio);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -95,13 +96,23 @@ public class Member_Register extends AppCompatActivity {
             final String body = response.body().string();
             Log.d(TAG, "서버에서 응답한 Body:" + body);
 
-            Member_Register.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //Handle UI here
-                    Toast.makeText(Member_Register.this,body,Toast.LENGTH_LONG).show();
+            try {
+                JSONObject json=new JSONObject(body);
+                if(json.getString("result").equals(true)){
+                    finish();
+                }else {
+                    Member_Register.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Handle UI here
+                            Toast.makeText(Member_Register.this, body, Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
-            });
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
     };

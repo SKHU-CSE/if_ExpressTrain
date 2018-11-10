@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.navermap.NMapPOIflagType;
@@ -46,7 +47,26 @@ import okhttp3.Response;
 
 import static android.content.ContentValues.TAG;
 
+
 public class StoreContent extends AppCompatActivity {
+    DBOpenHelper db;
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(db.getautoLogin()==0)
+        {
+            EditText editText = findViewById(R.id.content_editText);
+            editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
+            editText.setFocusable(false);
+        }else{
+            EditText editText = findViewById(R.id.content_editText);
+            editText.setText("");
+            editText.setHint("댓글 입력");
+            editText.setFocusable(true);
+        }
+
+    }
 
     private RecyclerView mRecycler_menu;
     private RecyclerView mRecycler_content;
@@ -56,17 +76,26 @@ public class StoreContent extends AppCompatActivity {
     Bitmap selectBitmap;
     ArrayList<Store_item> arrayList_menu;
     ArrayList<Store_item> arrayList_content;
+
     String store_name;
     GetJson json;
     String mJsonString;
     StoreAdapter storeAdapter1;
     StoreAdapter storeAdapter2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_content);
-
         Intent intent = getIntent();
+        TextView tv=findViewById(R.id.content_Store_name);
+        tv.setText(intent.getStringExtra("STORE_NAME"));
+        tv=findViewById(R.id.content_Store_address);
+        tv.setText(intent.getStringExtra("STORE_Address"));
+        tv=findViewById(R.id.content_Store_phone);
+        tv.setText(intent.getStringExtra("STORE_Phone"));
+        db=new DBOpenHelper(this);
+        db.open();
         store_name = intent.getStringExtra("STORE_NAME");
         mRecycler_menu = findViewById(R.id.content_menu_image);
         mRecycler_content = findViewById(R.id.content_another);
@@ -126,10 +155,16 @@ public class StoreContent extends AppCompatActivity {
             }
         });
 
-        EditText editText=findViewById(R.id.content_editText);
-        editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
-        editText.setBackgroundColor(Color.rgb(189,189,189));
-        editText.setFocusable(false);
+        if(db.getautoLogin()==0||db.getCount()==0) {
+            EditText editText = findViewById(R.id.content_editText);
+            editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
+            editText.setFocusable(false);
+        }else{
+            EditText editText = findViewById(R.id.content_editText);
+            editText.setText("");
+            editText.setHint("댓글 입력");
+            editText.setFocusable(true);
+        }
         Button button1 = findViewById(R.id.content_menu_add);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,9 +224,8 @@ public class StoreContent extends AppCompatActivity {
     };
     private void getResult2(String s) {
         try {
-            JSONArray jsonArray = new JSONArray(mJsonString);
-            Log.d("url", mJsonString);
-            int markerId = NMapPOIflagType.PIN;
+            JSONArray jsonArray = new JSONArray(s);
+
             int length = jsonArray.length();
             String lon = null;
             String lat = null;
@@ -366,6 +400,8 @@ public class StoreContent extends AppCompatActivity {
 
     public void gotoLogin(View view){
         // 로그인창으로
+        Intent intent=new Intent(StoreContent.this,Login.class);
+        startActivity(intent);
     }
 
 }

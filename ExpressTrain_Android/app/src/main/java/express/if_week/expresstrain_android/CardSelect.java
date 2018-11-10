@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -31,6 +32,17 @@ public class CardSelect extends AppCompatActivity {
         dreamTree.setOnClickListener(cardClickListener);
         dreamJaram.setOnClickListener(cardClickListener);
         gDream.setOnClickListener(cardClickListener);
+        Button button=findViewById(R.id.select_before);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CardSelect.this, MainActivity.class);
+                intent.putExtra("cardname", "꿈자람 카드");
+                intent.putExtra("cardtype", 0);
+
+                startActivity(intent);
+            }
+        });
 
     }
 

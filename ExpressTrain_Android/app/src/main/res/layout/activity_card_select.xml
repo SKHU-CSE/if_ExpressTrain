@@ -13,7 +13,7 @@
         android:padding="13dp">
 
         <Button
-            android:id="@+id/_before"
+            android:id="@+id/select_before"
             android:layout_width="17dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"

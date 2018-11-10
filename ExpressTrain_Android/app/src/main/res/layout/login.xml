@@ -60,12 +60,23 @@
         android:layout_below="@id/login_id_edit"
         android:layout_toRightOf="@id/login_pw"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auto"
+        android:textSize="25sp"
+        android:id="@+id/login_auto_check"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/login_pw_edit"/>
 
     <Button
         android:id="@+id/btLogin"
-        android:layout_below="@id/login_pw_edit"
+        android:layout_below="@id/login_auto_check"
         android:layout_width="230dp"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:background="@drawable/round_stroke"
         android:text="@string/login"
         android:textSize="30dp"
@@ -78,7 +89,7 @@
         android:id="@+id/btRegister"
         android:layout_below="@id/btLogin"
         android:layout_width="230dp"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:background="@drawable/round_stroke"
         android:text="회원가입"
         android:textSize="30dp"

@@ -8,12 +8,17 @@ import android.view.View;
 public class StartMenu extends AppCompatActivity {
 
     android.support.v7.widget.CardView cardView;
+    DBOpenHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_menu);
 
+        db=new DBOpenHelper(this);
+        db.open();
 
+        if(db.getautoLogin()==1)
+            db.UpdateAuto(0);
         cardView=findViewById(R.id.start_store);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override

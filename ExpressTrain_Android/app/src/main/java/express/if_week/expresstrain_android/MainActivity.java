@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private GetJson getJson = new GetJson();
 
     String[] category = new String[]{"한식", "중식", "분식", "제과점", "패스트푸드", "부식"};
-    private int categorynum;
+    private int categorynum=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +125,15 @@ public class MainActivity extends AppCompatActivity {
                         boolean[] checked = new boolean[]{false, false, false, false, false, false};
                         checked[position] = true;
                         categorynum = position;
+                        arrayList_store.clear();
+                        arrayList_store2.clear();
+                        new Thread() {
+                            public void run() {
+                                // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                                getJson.requestWebServer(callback, "getdb.php", "cardtype=" + cardnum, "categorynum="+categorynum);
+                            }
+                        }.start();
+                        //arrayList_store.add()
                         mAdapter = new CategoryAdapter(category, checked);
                         mRecyclerView.setAdapter(mAdapter);
                     }
@@ -198,6 +207,8 @@ public class MainActivity extends AppCompatActivity {
             public void ContentOnClick(View v, int position) {
                 Intent intent = new Intent(MainActivity.this, StoreContent.class);
                 intent.putExtra("STORE_NAME", arrayList_store2.get(position).title);
+                intent.putExtra("STORE_Address", arrayList_store2.get(position).Address);
+                intent.putExtra("STORE_Phone", arrayList_store2.get(position).phone);
                 startActivity(intent);
 
             }
@@ -205,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void MapOnClick(View v, int position) {
                 Intent intent = new Intent(MainActivity.this, MyMap.class);
+                intent.putExtra("STORE_NAME", arrayList_store2.get(position).title);
                 startActivity(intent);
             }
         });
@@ -212,10 +224,6 @@ public class MainActivity extends AppCompatActivity {
         mRecycler_stroeView2.setAdapter(storeAdapter2);
 
 
-        arrayList_store.add(new Store_item(1, "장희승", "인천광역시 검단", "010-4012-2423", null));
-        arrayList_store.add(new Store_item(1, "임수현", "서울시 검단", "010-4012-2423", null));
-        arrayList_store.add(new Store_item(1, "김남수", "서울시 목동", "010-4012-2423", null));
-        arrayList_store.add(new Store_item(1, "함진경", "서울특별시 여의대방로 43나길 25", "010-4012-2423", null));
 
 
         new Thread() {
@@ -278,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     storeAdapter2.notifyDataSetChanged();
-
+                    store_adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     Log.d(TAG, "getResult : ", e);
                 }

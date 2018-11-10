@@ -38,7 +38,7 @@ public class MyMap extends NMapActivity {
     private static final String TAG_NAME = "name";
     private static final String TAG_ADDRESS = "address";
     private static final String TAG_PHONE = "phone";
-    private static final String TAG_LAT = "latitude";
+    private static final String TAG_LAT = "LATITUDE";
     private static final String TAG_LON = "longitude";
 
     private GetJson getJson = new GetJson();
@@ -73,7 +73,7 @@ public class MyMap extends NMapActivity {
         new Thread() {
             public void run() {
             // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                getJson.requestWebServer(callback,"php","store="+storeName);
+                getJson.requestWebServer(callback,"selectMap.php","store="+storeName);
             }
         }.start();
 
