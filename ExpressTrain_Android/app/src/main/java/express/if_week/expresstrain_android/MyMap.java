@@ -77,15 +77,22 @@ public class MyMap extends NMapActivity {
         mMapViewerResourceProvider = new NMapViewerResourceProvider(this);
         mOverlayManager = new NMapOverlayManager(this, mMapView, mMapViewerResourceProvider);
 
+        NGeoPoint myLocation = getLocat();
         switch (getIntent().getStringExtra("type")){
             case "showAll":
-                new Thread() {
+                Handler handler = new Handler(Looper.getMainLooper());
+
+                handler.post(new Runnable() {
+                    @Override
                     public void run() {
-                        // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
-                        getJson.requestWebServer(callback, "php", "store=" + storeName,
-                                "lati="+ getLocat().getLatitude(), "longi"+getLocat().getLongitude());
-                    }
-                }.start();
+                          if(myLocation == null){
+                            Toast.makeText(getApplicationContext(),"없음",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            getJson.requestWebServer(callback, "php", "store=" + storeName,
+                                    "lati="+ myLocation.getLatitude(), "longi"+myLocation.getLongitude());
+                        }}
+                });
                 break;
             case "showOne":
                 new Thread() {
@@ -170,7 +177,9 @@ public class MyMap extends NMapActivity {
 
     public NGeoPoint getLocat() {
         NMapLocationManager myLocationManager = new NMapLocationManager(this);
+        //myLocationManager.enableMyLocation(false);
         NGeoPoint mylocation = myLocationManager.getMyLocation();
+
 
         return mylocation;
     }
