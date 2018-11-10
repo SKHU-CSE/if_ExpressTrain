@@ -20,6 +20,7 @@ public class StartMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(StartMenu.this,MainActivity.class);
                 intent.putExtra("cardtype","0");
+                intent.putExtra("cardname","꿈나무 카드");
                 startActivity(intent);
                 finish();
             }

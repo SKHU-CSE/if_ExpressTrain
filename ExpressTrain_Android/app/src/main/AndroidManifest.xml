@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".StartMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,8 +28,9 @@
         </activity>
         <activity android:name=".StoreContent" />
         <activity android:name=".MyMap" />
-        <activity android:name=".StartMenu" />
-        <activity android:name=".CardSelect"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".CardSelect" />
+        <activity android:name=".Member_Register"></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -131,6 +133,10 @@ public class StoreContent extends AppCompatActivity {
             }
         });
 
+        EditText editText=findViewById(R.id.content_editText);
+        editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
+        editText.setBackgroundColor(Color.rgb(189,189,189));
+        editText.setFocusable(false);
         Button button1 = findViewById(R.id.content_menu_add);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,6 +305,10 @@ public class StoreContent extends AppCompatActivity {
 
         UploadImage ui = new UploadImage();
         ui.execute(selectBitmap);
+    }
+
+    public void gotoLogin(View view){
+        // 로그인창으로
     }
 
 }
