@@ -54,6 +54,7 @@
         android:layout_below="@id/register_id_edit"
         android:layout_alignTop="@id/register_pwd"
         android:layout_alignParentRight="true"
+        android:inputType="textPassword"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/register_pwd"
         android:maxLines="1" />
@@ -83,6 +84,7 @@
         android:layout_alignTop="@id/register_email"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
+        android:inputType="textEmailAddress"
         android:layout_toRightOf="@id/register_pwd"
         android:maxLines="1" />
 
@@ -120,7 +122,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
         android:paddingTop="10dp"
-        android:text="email:"
+        android:text="NickName:"
         android:textColor="#000000"
         android:textSize="23sp"
 

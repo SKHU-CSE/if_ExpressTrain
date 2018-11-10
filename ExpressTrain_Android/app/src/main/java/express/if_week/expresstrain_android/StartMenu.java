@@ -8,6 +8,8 @@ import android.view.View;
 
 public class StartMenu extends AppCompatActivity {
 
+
+    DBOpenHelper db;
     CardView map;
     CardView store;
 
@@ -15,6 +17,13 @@ public class StartMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_menu);
+
+
+        db=new DBOpenHelper(this);
+        db.open();
+
+        if(db.getautoLogin()==1)
+            db.UpdateAuto(0);
 
         map = findViewById(R.id.start_map);
         map.setOnClickListener(new View.OnClickListener() {
@@ -29,6 +38,7 @@ public class StartMenu extends AppCompatActivity {
         });
         store=findViewById(R.id.start_store);
         store.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(StartMenu.this,MainActivity.class);

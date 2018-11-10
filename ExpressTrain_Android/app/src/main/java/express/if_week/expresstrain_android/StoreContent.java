@@ -1,6 +1,7 @@
 package express.if_week.expresstrain_android;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,11 +17,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.navermap.NMapPOIflagType;
@@ -46,7 +51,39 @@ import okhttp3.Response;
 
 import static android.content.ContentValues.TAG;
 
+
 public class StoreContent extends AppCompatActivity {
+    DBOpenHelper db;
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        db.open();
+        if(db.getautoLogin()==0)
+        {
+            EditText editText = findViewById(R.id.content_editText);
+            editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
+            editText.setFocusable(false);
+        }else{
+            final EditText editText = findViewById(R.id.content_editText);
+            editText.setText("");
+            editText.setHint("댓글 입력");
+            editText.setFocusable(true);
+            editText.post(new Runnable() {
+                @Override
+                public void run() {
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                    imm.showSoftInput(editText,0);
+
+                }
+            });
+        }
+
+    }
 
     private RecyclerView mRecycler_menu;
     private RecyclerView mRecycler_content;
@@ -56,17 +93,26 @@ public class StoreContent extends AppCompatActivity {
     Bitmap selectBitmap;
     ArrayList<Store_item> arrayList_menu;
     ArrayList<Store_item> arrayList_content;
+
     String store_name;
     GetJson json;
     String mJsonString;
     StoreAdapter storeAdapter1;
     StoreAdapter storeAdapter2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_content);
-
         Intent intent = getIntent();
+        TextView tv=findViewById(R.id.content_Store_name);
+        tv.setText(intent.getStringExtra("STORE_NAME"));
+        tv=findViewById(R.id.content_Store_address);
+        tv.setText(intent.getStringExtra("STORE_Address"));
+        tv=findViewById(R.id.content_Store_phone);
+        tv.setText(intent.getStringExtra("STORE_Phone"));
+        db=new DBOpenHelper(this);
+        db.open();
         store_name = intent.getStringExtra("STORE_NAME");
         mRecycler_menu = findViewById(R.id.content_menu_image);
         mRecycler_content = findViewById(R.id.content_another);
@@ -86,7 +132,37 @@ public class StoreContent extends AppCompatActivity {
         mRecycler_content.setLayoutManager(mLayoutManager_content);
         mRecycler_content.setNestedScrollingEnabled(false);
 
+        EditText editText=findViewById(R.id.content_editText);
+        final EditText finalEditText = editText;
+        final EditText finalEditText1 = editText;
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId)
+                {
+                    case EditorInfo.IME_ACTION_GO:
+                        if(finalEditText.getText().toString().equals(""))
+                            Toast.makeText(StoreContent.this,"입력해주세요",Toast.LENGTH_LONG).show();
+                        else
+                        {
+                            long now=System.currentTimeMillis();
+                            final Date date=new Date(now);
+                            final SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+
+                            new Thread() {
+                                public void run() {
+                                    // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                                    json.requestWebServer(callback3,"addcomment.php","STORE="+store_name,"CONTENT="+ finalEditText1.getText().toString(),
+                                    "TIME="+(sdf.format(date)));
+                                }
+                            }.start();
+                        }
+
+                }
+                return false;
+            }
+        });
         storeAdapter1=new StoreAdapter(arrayList_menu,this, new StoreAdapter.ButtonClickListener() {
 
 
@@ -126,10 +202,16 @@ public class StoreContent extends AppCompatActivity {
             }
         });
 
-        EditText editText=findViewById(R.id.content_editText);
-        editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
-        editText.setBackgroundColor(Color.rgb(189,189,189));
-        editText.setFocusable(false);
+        if(db.getautoLogin()==0||db.getCount()==0) {
+            editText = findViewById(R.id.content_editText);
+            editText.setText("댓글을 입력할 수 없습니다. 로그인 필요");
+            editText.setFocusable(false);
+        }else{
+            editText = findViewById(R.id.content_editText);
+            editText.setText("");
+            editText.setHint("댓글 입력");
+            editText.setFocusable(true);
+        }
         Button button1 = findViewById(R.id.content_menu_add);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,9 +252,29 @@ public class StoreContent extends AppCompatActivity {
             Log.d(TAG, "서버에서 응답한 Body:" + body);
             mJsonString = body;
             getResult();
+            new Thread() {
+                public void run() {
+                    // 파라미터 2개와 미리정의해논 콜백함수를 매개변수로 전달하여 호출
+                    json.requestWebServer(callback2,"commentview.php","store="+store_name);
+                }
+            }.start();
         }
     };
 
+
+    private final Callback callback3 = new Callback() {
+        @Override
+        public void onFailure(okhttp3.Call call, IOException e) {
+            Log.d(TAG, "콜백오류:" + e.getMessage());
+        }
+
+        @Override
+        public void onResponse(okhttp3.Call call, Response response) throws IOException {
+            String body = response.body().string();
+            Log.d(TAG, "서버에서 응답한 Body:" + body);
+
+        }
+    };
     private final Callback callback2 = new Callback() {
         @Override
         public void onFailure(okhttp3.Call call, IOException e) {
@@ -189,9 +291,8 @@ public class StoreContent extends AppCompatActivity {
     };
     private void getResult2(String s) {
         try {
-            JSONArray jsonArray = new JSONArray(mJsonString);
-            Log.d("url", mJsonString);
-            int markerId = NMapPOIflagType.PIN;
+            JSONArray jsonArray = new JSONArray(s);
+
             int length = jsonArray.length();
             String lon = null;
             String lat = null;
@@ -366,6 +467,8 @@ public class StoreContent extends AppCompatActivity {
 
     public void gotoLogin(View view){
         // 로그인창으로
+        Intent intent=new Intent(StoreContent.this,Login.class);
+        startActivity(intent);
     }
 
 }
