@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ExpressTrain_Android</string>
+    <string name="str_done">Done</string>
 </resources>

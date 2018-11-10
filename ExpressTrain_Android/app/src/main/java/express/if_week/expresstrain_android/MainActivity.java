@@ -167,4 +167,10 @@ public class MainActivity extends AppCompatActivity {
         //arrayList_store.add()
     }
 
+    void goToMap(View view){
+        Intent intent=new Intent(this, MyMap.class);
+        startActivity(intent);
+
+    }
+
 }

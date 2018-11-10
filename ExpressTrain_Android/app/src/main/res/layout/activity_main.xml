@@ -36,7 +36,8 @@
             android:layout_centerVertical="true"
             android:background="@drawable/round_stroke"
             android:text="꿈나무"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:onClick="goToMap"/>
     </RelativeLayout>
 
 
