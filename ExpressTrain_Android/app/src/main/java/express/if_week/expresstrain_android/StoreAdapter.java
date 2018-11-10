@@ -97,6 +97,11 @@ class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+
+    public void addMenu(Store_item item)
+    {
+        mDataset.add(item);
+    }
     @Override
     public int getItemViewType(int position) {
 
