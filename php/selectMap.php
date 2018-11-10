@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 $conn = mysqli_connect(localhost, 'root', '123', 'ExpressTrain');
 $key = $_GET['store'];//storename받음
 

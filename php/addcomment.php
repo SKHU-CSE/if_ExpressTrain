@@ -1,10 +1,13 @@
 <?php
+header("Content-Type:text/html;charset=utf-8");
 $conn = mysqli_connect(localhost, 'root', '123', 'ExpressTrain');
-
+mysqli_query($conn, "set session character_set_connection=utf8;");
+mysqli_query($conn, "set session character_set_results=utf8;");
+mysqli_query($conn, "set session character_set_client=utf8;");
 $key1 = $_GET['STORE'];   //STORE_NAME을가지고 시작
 
 $getnamekey = $_GET['ID'];
-$sql = "SELECT * FROM MEMBER WHERE ID='$getnamekey'"
+$sql = "SELECT * FROM MEMBER WHERE ID='$getnamekey'";
 $req = mysqli_query($conn, $sql);
 $topic = mysqli_fetch_array($res);
 $key2 = $topic['NAME'];
