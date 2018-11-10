@@ -1,6 +1,8 @@
 package express.if_week.expresstrain_android;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -33,11 +35,11 @@ public class MyMap extends NMapActivity {
 
     private static final String LOG_TAG = "";
     private static final String TAG_JSON = "";
-    private static final String TAG_NAME = "";
-    private static final String TAG_ADDRESS = "";
-    private static final String TAG_PHONE = "";
-    private static final String TAG_LAT = "";
-    private static final String TAG_LON = "";
+    private static final String TAG_NAME = "name";
+    private static final String TAG_ADDRESS = "address";
+    private static final String TAG_PHONE = "phone";
+    private static final String TAG_LAT = "latitude";
+    private static final String TAG_LON = "longitude";
 
     private GetJson getJson = new GetJson();
     // create resource provider
@@ -52,15 +54,17 @@ public class MyMap extends NMapActivity {
         setContentView(R.layout.activity_my_map);
 
         mMapView = new NMapView(this);
-        mMapController = mMapView.getMapController();
+
 
         mMapView.setClientId(CLIENT_ID); // 클라이언트 아이디 값 설정
         mMapView.setClickable(true);
         mMapView.setEnabled(true);
         mMapView.setFocusable(true);
+
+
         mMapView.setFocusableInTouchMode(true);
         mMapView.requestFocus();
-
+        mMapController = mMapView.getMapController();
         ViewGroup vg = findViewById(R.id.mymap);
         vg.addView(mMapView);
 
@@ -91,42 +95,55 @@ public class MyMap extends NMapActivity {
     };
 
     private void getResult(){
-        try {
-            JSONArray jsonArray = new JSONArray(mJsonString);
 
-            int markerId = NMapPOIflagType.PIN;
-            int length = jsonArray.length();
-            String lon=null;
-            String lat=null;
 
-            // set POI data
-            NMapPOIdata poiData = new NMapPOIdata(length, mMapViewerResourceProvider);
-            poiData.beginPOIdata(length);
+        Handler handler = new Handler(Looper.getMainLooper());
 
-            for(int i=0;i<length;i++){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONArray jsonArray = new JSONArray(mJsonString);
+                    Log.d("url",mJsonString);
+                    int markerId = NMapPOIflagType.PIN;
+                    int length = jsonArray.length();
+                    String lon=null;
+                    String lat=null;
 
-                JSONObject item = jsonArray.getJSONObject(i);
+                    // set POI data
+                    NMapPOIdata poiData = new NMapPOIdata(length, mMapViewerResourceProvider);
+                    poiData.beginPOIdata(length);
 
-                String name = item.getString(TAG_NAME);
-                String address = item.getString(TAG_ADDRESS);
-                String phone = item.getString(TAG_PHONE);
-                lon = item.getString(TAG_LON);
-                lat = item.getString(TAG_LAT);
+                    for(int i=0;i<length;i++){
 
-                poiData.addPOIitem(Float.parseFloat(lon), Float.parseFloat(lat), name, markerId, 0);
+                        JSONObject item = jsonArray.getJSONObject(i);
+
+                        String name = item.getString(TAG_NAME);
+                        String address = item.getString(TAG_ADDRESS);
+                        String phone = item.getString(TAG_PHONE);
+                        lon = item.getString(TAG_LON);
+                        lat = item.getString(TAG_LAT);
+
+
+                        poiData.addPOIitem(Double.parseDouble(lon), Double.parseDouble(lat), name, markerId, 0);
+
+                    }
+                    poiData.endPOIdata();
+
+                    // create POI data overlay
+                    NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
+
+                    // show all POI data
+                    poiDataOverlay.showAllPOIdata(0);
+                    mMapController.setMapCenter(new NGeoPoint(Float.parseFloat(lon), Float.parseFloat(lat)), 12);
+
+                } catch (JSONException e) {
+                    Log.d(TAG, "getResult : ", e);
+                }
+
             }
-            poiData.endPOIdata();
+        });
 
-            // create POI data overlay
-            NMapPOIdataOverlay poiDataOverlay = mOverlayManager.createPOIdataOverlay(poiData, null);
-
-            // show all POI data
-            poiDataOverlay.showAllPOIdata(0);
-            mMapController.setMapCenter(new NGeoPoint(Float.parseFloat(lon), Float.parseFloat(lat)), 12);
-
-        } catch (JSONException e) {
-            Log.d(TAG, "getResult : ", e);
-        }
 
     }
 

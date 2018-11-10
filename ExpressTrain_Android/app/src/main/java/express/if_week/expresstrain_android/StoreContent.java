@@ -68,12 +68,12 @@ public class StoreContent extends AppCompatActivity {
         }));
 
 
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.cat_food)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.cat_food)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.cat_food)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.cat_food)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.cat_food)));
-        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.cat_food)));
+        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test1)));
+        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test5)));
+        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test2)));
+        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test4)));
+        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test2)));
+        arrayList_menu.add(new Store_item(3,"","","",BitmapFactory.decodeResource(getResources(),R.drawable.test1)));
 
 
         arrayList_content.add(new Store_item(4,"장희승","ㅇㅁㅈㅇㅁㅈㅇ","2018.11.7",null));

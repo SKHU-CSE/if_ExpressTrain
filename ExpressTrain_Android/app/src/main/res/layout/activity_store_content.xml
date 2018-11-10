@@ -85,17 +85,11 @@
         android:layout_marginRight="20dp"/>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/content_Store_address"
-        android:layout_marginLeft="7dp"
-        android:id="@+id/content_stroke1"
-        android:background="#aaaaaa"
-        android:layout_marginRight="7dp"></View>
+
 <android.support.v4.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_below="@id/content_stroke1"
+    android:layout_below="@id/content_image"
+    android:layout_marginTop="10dp"
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
