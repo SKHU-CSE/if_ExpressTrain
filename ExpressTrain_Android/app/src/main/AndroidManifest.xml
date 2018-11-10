@@ -26,9 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StoreContent" />
-        <activity android:name=".StoreMap" />
+        <activity android:name=".StoreContent"> </activity>
         <activity android:name=".MyMap"></activity>
+
+        <activity android:name=".StartMenu"></activity>
+
     </application>
 
 </manifest>

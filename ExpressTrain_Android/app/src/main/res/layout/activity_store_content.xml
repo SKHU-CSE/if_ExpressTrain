@@ -1,9 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StoreContent">
 
-</android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/Content_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="13dp">
+
+        <Button
+            android:id="@+id/Content_before"
+            android:layout_width="17dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/before" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="급행열차"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:id="@+id/Content_myLocation"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/round_stroke"
+            android:text="test"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/Content_topbar"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="10dp"
+        android:id="@+id/content_image"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_alignTop="@id/content_image"
+        android:id="@+id/content_Store_name"
+        android:text="임수현"
+        android:layout_toRightOf="@id/content_image"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:id="@+id/content_Store_address"
+        android:text="서울시 도봉구 "
+        android:layout_marginBottom="30dp"
+        android:layout_alignLeft="@id/content_Store_name"
+        android:layout_below="@id/content_Store_name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="010-1234-1231"
+        android:textSize="16sp"
+        android:textColor="#eec25b"
+        android:textStyle="bold"
+        android:layout_alignTop="@id/content_Store_name"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/content_Store_address"
+        android:layout_marginLeft="7dp"
+        android:id="@+id/content_stroke1"
+        android:background="#aaaaaa"
+        android:layout_marginRight="7dp"></View>
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_below="@id/content_stroke1"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/Content_scroll">
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_menu_image">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:background="@drawable/round_stroke"
+        android:text="추가"
+        android:textColor="#ffffff"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:id="@+id/content_menu_add"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:layout_marginLeft="7dp"
+        android:id="@+id/content_stroke2"
+        android:background="#aaaaaa"
+        android:layout_marginRight="7dp"></View>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="50dp"
+        android:id="@+id/content_editText"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/stroke"
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        android:hint="댓글 입력"
+
+        android:layout_marginTop="10dp"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/stock3"
+        ></View>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_another"
+      ></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

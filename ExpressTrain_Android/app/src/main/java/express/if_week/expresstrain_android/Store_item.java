@@ -1,6 +1,7 @@
 package express.if_week.expresstrain_android;
 
 
+import android.graphics.Bitmap;
 
 public class Store_item {
     public String getTitle() {
@@ -27,13 +28,15 @@ public class Store_item {
         this.phone = phone;
     }
 
-    public Store_item(int Type,String Title,String address,String phone){
+    public Store_item(int Type,String Title,String address,String phone,Bitmap bitmap){
         this.title=Title;
         this.Address=address;
         this.phone=phone;
         this.Type=Type;
         expend=false;
+        this.bitmap=bitmap;
     }
+    Bitmap bitmap;
     boolean expend;
     int Type;
     String title;

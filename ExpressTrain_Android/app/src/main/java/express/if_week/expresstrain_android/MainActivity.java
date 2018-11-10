@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -53,7 +54,16 @@ public class MainActivity extends AppCompatActivity {
         mRecycler_stroeView2.setLayoutManager(mLayoutManager_store2);
         mRecycler_stroeView2.setNestedScrollingEnabled(false);
 
+       Button button=findViewById(R.id.Main_before);
+       button.setOnClickListener(new View.OnClickListener(){
 
+           @Override
+           public void onClick(View v) {
+               Intent intent=new Intent(MainActivity.this,StartMenu.class);
+               startActivity(intent);
+               finish();
+           }
+       });
         // specify an adapter (see also next example)
         mAdapter = new CategoryAdapter(category,new boolean[]{true,false,false,false,false,false});
         mRecyclerView.setAdapter(mAdapter);
@@ -82,17 +92,17 @@ public class MainActivity extends AppCompatActivity {
                 new RecycleViewItemClickListener(getApplicationContext(), mRecyclerView, new RecycleViewItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                      final CardView cardView=view.findViewById(R.id.card_2_card);
-                      final RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) cardView.getLayoutParams();
+                        final CardView cardView=view.findViewById(R.id.card_2_card);
+                        final RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) cardView.getLayoutParams();
                         ValueAnimator animator=null;
 
-                      if(!arrayList_store2.get(position).expend) {
-                          arrayList_store2.get(position).expend=true;
-                         animator = ValueAnimator.ofInt(layoutParams.height,layoutParams.height+100);
-                          }else {
-                          arrayList_store2.get(position).expend=false;
-                          animator = ValueAnimator.ofInt(layoutParams.height, layoutParams.height-100);
-                      }
+                        if(!arrayList_store2.get(position).expend) {
+                            arrayList_store2.get(position).expend=true;
+                            animator = ValueAnimator.ofInt(layoutParams.height,layoutParams.height+100);
+                        }else {
+                            arrayList_store2.get(position).expend=false;
+                            animator = ValueAnimator.ofInt(layoutParams.height, layoutParams.height-100);
+                        }
                         if(animator!=null) {
                             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                 @Override
@@ -111,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onLongItemClick(View view, int position) {
                         //      Toast.makeText(getApplicationContext(),position+"번 째 아이템 롱 클릭",Toast.LENGTH_SHORT).show();
+
                     }
                 }));
 
@@ -140,28 +151,28 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void MapOnClick(View v) {
-                Intent intent=new Intent(MainActivity.this,StoreMap.class);
-                startActivity(intent);
+               // Intent intent=new Intent(MainActivity.this,StoreMap.class);
+             //   startActivity(intent);
             }
             }));
 
 
 
-        arrayList_store.add(new Store_item(1,"장희승","인천광역시 검단","010-4012-2423"));
-        arrayList_store.add(new Store_item(1,"임수현","서울시 검단","010-4012-2423"));
-        arrayList_store.add(new Store_item(1,"김남수","서울시 목동","010-4012-2423"));
-        arrayList_store.add(new Store_item(1,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423"));
+        arrayList_store.add(new Store_item(1,"장희승","인천광역시 검단","010-4012-2423",null));
+        arrayList_store.add(new Store_item(1,"임수현","서울시 검단","010-4012-2423",null));
+        arrayList_store.add(new Store_item(1,"김남수","서울시 목동","010-4012-2423",null));
+        arrayList_store.add(new Store_item(1,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423",null));
 
 
-        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423"));
+        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423",null));
 
-        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423"));
-        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423"));
+        arrayList_store2.add(new Store_item(2,"장희승","인천광역시 검단","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"임수현","서울시 검단","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"김남수","서울시 목동","010-4012-2423",null));
+        arrayList_store2.add(new Store_item(2,"함진경","서울특별시 여의대방로 43나길 25","010-4012-2423",null));
 
 
         //arrayList_store.add()
