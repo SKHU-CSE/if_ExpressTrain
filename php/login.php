@@ -12,10 +12,11 @@ if($key1===null || $key2===null ){
 
   $count = mysqli_num_rows($res);
   if($count === 0){   //없는아이디나 pw일경우 에러코드반환
-    $row_array['error']=100;
+    $row_array['result']=100;
     echo json_encode($row_array, JSON_UNESCAPED_UNICODE);
   }else {
-    echo "로그인성공";
+    $result = array("result" => "true");  //result태그에 true값
+    echo json_encode($result, JSON_UNESCAPED_UNICODE);
   }
 }
  ?>

@@ -26,6 +26,6 @@ while($topic = mysqli_fetch_array($res)){
   array_push($D_row,$row_array);
 }
 #var_dump( $D_row);
-echo json_encode($D_row,JSON_UNESCAPED_UNICODE);
+echo json_encode($D_row,JSON_UNESCAPED_UNICODE);//json으로 뿌려주기
 mysqli_close($conn);
  ?>

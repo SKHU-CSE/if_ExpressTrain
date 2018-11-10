@@ -2,7 +2,13 @@
 $conn = mysqli_connect(localhost, 'root', '123', 'ExpressTrain');
 
 $key1 = $_GET['STORE'];   //STORE_NAME을가지고 시작
-$key2 = $_GET['NAME'];
+
+$getnamekey = $_GET['ID'];
+$sql = "SELECT * FROM MEMBER WHERE ID='$getnamekey'"
+$req = mysqli_query($conn, $sql);
+$topic = mysqli_fetch_array($res);
+$key2 = $topic['NAME'];
+
 $key3 = $_GET['TIME'];
 $key4 = $_GET['CONTENT'];
 

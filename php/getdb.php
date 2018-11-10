@@ -2,17 +2,20 @@
 $conn = mysqli_connect(localhost, 'root', '123', 'ExpressTrain');
 #header('Content-TYPE: applcation/json'); 다운로드됌 넣으면
 
+$categorynum = $_GET['categorynum']; //category_num받아옴
+
+
 
 #카드종류에 따라 화면 출력 달라짐
 switch($_GET['cardtype']){
   case '0':
-    $sql = "SELECT * FROM STORE WHERE CARD_TYPE=0";
+    $sql = "SELECT * FROM STORE WHERE CARD_TYPE=0 AND CATEGORY_NUM='$categorynum'";
     break;
   case '1':
-    $sql = "SELECT * FROM STORE WHERE CARD_TYPE=1";
+    $sql = "SELECT * FROM STORE WHERE CARD_TYPE=1 AND CATEGORY_NUM='$categorynum'";
     break;
   case '2':
-    $sql = "SELECT * FROM STORE WHERE CARD_TYPE=2";
+    $sql = "SELECT * FROM STORE WHERE CARD_TYPE=2 AND CATEGORY_NUM='$categorynum'";
     break;
 }
 
@@ -28,6 +31,7 @@ while($topic = mysqli_fetch_array($res)){
   $row_array['longitude']=$topic['LONGITUDE'];
   $row_array['photo']=$topic['PHOTO'];
   $storenum = $topic['STORE_NUM'];
+  $row_array['store_type']=$topic['STORE_TYPE'];
 
   $M_row=array();
   $sql="SELECT * FROM MENU WHERE STORE_NUM = $storenum";   //메뉴이미지가져오기
